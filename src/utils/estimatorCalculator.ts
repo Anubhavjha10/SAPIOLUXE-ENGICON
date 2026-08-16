@@ -77,7 +77,8 @@ export function calculateEstimate(
   const floorMultiplier = config.floorMultipliers[floorCount] || 1;
   const builtUpArea = validPlotArea * floorMultiplier;
 
-  const ratePerSqFt = config.rates[packageId] || config.rates.premium;
+  const ratesRecord = config.rates as Record<string, number>;
+  const ratePerSqFt = ratesRecord[packageId] || config.rates.premium || 1750;
   const baseConstructionCost = builtUpArea * ratePerSqFt;
 
   const addOnsBreakdown: { id: string; name: string; cost: number }[] = [];
@@ -106,8 +107,10 @@ export function calculateEstimate(
     baseConstructionCost,
     addOnsBreakdown,
     addOnsTotal,
+    locationAdjustment: 0,
     estimatedTotalBudget,
     estimatedTotalLakhs,
+    categoryBreakdown: [],
   };
 }
 

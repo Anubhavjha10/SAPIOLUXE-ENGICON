@@ -1,6 +1,6 @@
 import React from 'react';
 import { useOutletContext, Link } from 'react-router-dom';
-import { ArrowRight, Check, Calculate, Architecture, FormatQuote } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { VideoHero } from '../components/VideoHero';
 import { PackageCard } from '../components/PackageCard';
 import { Estimator } from '../components/Estimator';

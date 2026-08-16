@@ -48,9 +48,9 @@ export const Dashboard: React.FC = () => {
       const premiumPkg = packages.find((p) => p.id === 'premium');
       const luxuryPkg = packages.find((p) => p.id === 'luxury');
       setRates({
-        classic: classicPkg?.ratePerSqFt || rates.classic,
-        premium: premiumPkg?.ratePerSqFt || rates.premium,
-        luxury: luxuryPkg?.ratePerSqFt || rates.luxury,
+        classic: classicPkg?.ratePerSqFt ?? classicPkg?.pricePerSqFt ?? rates.classic,
+        premium: premiumPkg?.ratePerSqFt ?? premiumPkg?.pricePerSqFt ?? rates.premium,
+        luxury: luxuryPkg?.ratePerSqFt ?? luxuryPkg?.pricePerSqFt ?? rates.luxury,
       });
     }
   }, [packages]);

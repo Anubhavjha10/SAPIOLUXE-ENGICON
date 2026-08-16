@@ -89,11 +89,11 @@ export const Footer: React.FC = () => {
           </p>
           <div className="flex items-center gap-2 text-surface-variant text-sm pt-1">
             <Phone className="w-4 h-4 text-tertiary-fixed-dim shrink-0" />
-            <span>{contact.phone || '+91 94370 12345'}</span>
+            <span>{contact.phone || contact.phonePrimary || '+91 94370 12345'}</span>
           </div>
           <div className="flex items-center gap-2 text-surface-variant text-sm">
             <Mail className="w-4 h-4 text-tertiary-fixed-dim shrink-0" />
-            <span>{contact.email || 'contact@sapioluxe.com'}</span>
+            <span>{contact.email || contact.emailPrimary || 'contact@sapioluxe.com'}</span>
           </div>
           <div className="flex items-center gap-2 text-surface-variant text-sm">
             <MapPin className="w-4 h-4 text-tertiary-fixed-dim shrink-0" />

@@ -42,6 +42,7 @@ export interface Package {
   name: 'Classic' | 'Premium' | 'Luxury' | string;
   tier: string; // e.g. TIER 01
   pricePerSqFt: number;
+  ratePerSqFt?: number;
   unit: string; // e.g. "₹/sq.ft"
   tagline: string;
   description?: string;
@@ -57,7 +58,7 @@ export interface Package {
 
 export interface Project {
   id: string;
-  slug: string;
+  slug?: string;
   title: string;
   subtitle?: string;
   category: 'Residential' | 'Commercial' | 'Interior' | 'Civil';
@@ -130,10 +131,10 @@ export interface EstimatorResult {
   baseConstructionCost: number;
   addOnsBreakdown: { id: string; name: string; cost: number }[];
   addOnsTotal: number;
-  locationAdjustment: number;
+  locationAdjustment?: number;
   estimatedTotalBudget: number; // in INR
   estimatedTotalLakhs: string;  // e.g. "44.90"
-  categoryBreakdown: { name: string; percentage: number; cost: number }[];
+  categoryBreakdown?: { name: string; percentage: number; cost: number }[];
 }
 
 export interface Testimonial {
@@ -218,8 +219,10 @@ export interface ContactSettings {
   address: string;
   phonePrimary: string;
   phoneSecondary?: string;
+  phone?: string;
   emailPrimary: string;
   emailSecondary?: string;
+  email?: string;
   workingHours: string;
   mapEmbedUrl: string;
   whatsappNumber?: string;
@@ -244,7 +247,7 @@ export interface Inquiry {
   estimatedBudget?: string;
   budget?: string;
   message: string;
-  status: 'New' | 'Contacted' | 'In Progress' | 'Converted' | 'Closed';
+  status: 'New' | 'Contacted' | 'In Progress' | 'In Review' | 'Converted' | 'Closed' | 'Archived';
   createdAt: string;
   updatedAt?: string;
 }

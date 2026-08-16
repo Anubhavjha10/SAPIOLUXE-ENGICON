@@ -40,8 +40,9 @@ export const Estimator: React.FC<EstimatorProps> = ({
     if (Array.isArray(packages)) {
       packages.forEach((pkg) => {
         if (pkg && (pkg.id === 'classic' || pkg.id === 'premium' || pkg.id === 'luxury')) {
-          if (typeof pkg.ratePerSqFt === 'number' && pkg.ratePerSqFt > 0) {
-            baseRates[pkg.id] = pkg.ratePerSqFt;
+          const rate = pkg.ratePerSqFt ?? pkg.pricePerSqFt;
+          if (typeof rate === 'number' && rate > 0) {
+            baseRates[pkg.id as 'classic' | 'premium' | 'luxury'] = rate;
           }
         }
       });
