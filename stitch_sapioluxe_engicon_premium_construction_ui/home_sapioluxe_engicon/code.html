@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sapioluxe Engicon - Precision in Engineering</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&amp;family=Inter:wght@400;600&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#1b1c1c",
+                        "on-primary-container": "#858383",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffdea5",
+                        "inverse-surface": "#2f3031",
+                        "on-tertiary-fixed": "#261900",
+                        "inverse-on-surface": "#f2f0f0",
+                        "on-surface-variant": "#444748",
+                        "inverse-primary": "#c8c6c5",
+                        "surface-variant": "#e3e2e2",
+                        "surface": "#faf9f9",
+                        "outline": "#747878",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e9e8e8",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dbdad9",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#c4c7c7",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#e3e2e0",
+                        "background": "#faf9f9",
+                        "on-secondary-fixed-variant": "#464745",
+                        "surface-container": "#efeded",
+                        "tertiary": "#000000",
+                        "on-tertiary-fixed-variant": "#5d4201",
+                        "secondary-container": "#e0e0dd",
+                        "surface-bright": "#faf9f9",
+                        "surface-tint": "#5f5e5e",
+                        "on-secondary-container": "#626361",
+                        "primary": "#000000",
+                        "secondary": "#5e5f5d",
+                        "on-surface": "#1b1c1c",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-tertiary-container": "#a17f3b",
+                        "primary-container": "#1c1b1b",
+                        "primary-fixed": "#e5e2e1",
+                        "secondary-fixed-dim": "#c7c6c4",
+                        "tertiary-container": "#261900",
+                        "on-secondary-fixed": "#1a1c1a",
+                        "surface-container-highest": "#e3e2e2",
+                        "on-primary-fixed-variant": "#474746",
+                        "tertiary-fixed-dim": "#e9c176",
+                        "surface-container-low": "#f4f3f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "margin-desktop": "64px",
+                        "section-gap": "128px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display-xl": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "mono-technical": ["Courier Prime"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "display-xl": ["80px", { "lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["40px", { "lineHeight": "48px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "mono-technical": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(250, 249, 249, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+        .technical-line {
+            border-color: rgba(0,0,0,0.08);
+        }
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(250, 249, 249, 0.1), rgba(250, 249, 249, 0.95));
+        }
+        /* Hide scrollbar for clean masonry */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-tertiary-fixed-dim selection:text-tertiary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-container-highest/80 backdrop-blur-md border-b border-outline-variant/30 flex justify-between items-center w-full px-margin-desktop py-4 mx-auto max-w-container-max md:px-margin-desktop px-margin-mobile">
+<div class="font-headline-md text-headline-md font-bold tracking-tight text-primary dark:text-inverse-primary uppercase tracking-[0.1em]">
+            Sapioluxe Engicon
+        </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-primary dark:text-tertiary-fixed-dim font-semibold border-b-2 border-primary dark:border-tertiary-fixed-dim pb-1 font-body-md text-body-md" href="#">Home</a>
+<a class="text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-tertiary-fixed-dim transition-colors font-body-md text-body-md" href="#">About</a>
+<a class="text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-tertiary-fixed-dim transition-colors font-body-md text-body-md" href="#">Services</a>
+<a class="text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-tertiary-fixed-dim transition-colors font-body-md text-body-md" href="#">Packages</a>
+<a class="text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-tertiary-fixed-dim transition-colors font-body-md text-body-md" href="#">Projects</a>
+<a class="text-secondary dark:text-secondary-fixed hover:text-primary dark:hover:text-tertiary-fixed-dim transition-colors font-body-md text-body-md" href="#">Estimator</a>
+</div>
+<button class="hidden md:block bg-primary text-on-primary px-6 py-3 font-label-caps text-label-caps hover:bg-tertiary-fixed-dim hover:text-tertiary-container transition-all duration-300">
+            Get Free Consultation
+        </button>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</nav>
+<!-- Hero Section -->
+<section class="relative min-h-[90vh] flex items-center pt-24 pb-32">
+<!-- STITCH_SHADER_START:ANIMATION_1 class="absolute inset-0 w-full h-full object-cover -z-20" -->
+<div class="absolute inset-0 w-full h-full object-cover -z-20" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_1" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_1');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+void main() {
+    vec2 uv = v_texCoord;
+    
+    // Slow moving architectural "grid" or structural beam movement
+    float grid = 0.0;
+    grid += smoothstep(0.48, 0.5, abs(sin(uv.x * 10.0 + u_time * 0.1)));
+    grid *= smoothstep(0.48, 0.5, abs(sin(uv.y * 10.0 + u_time * 0.1)));
+    
+    // Subtle gradient movement
+    vec3 color1 = vec3(0.1, 0.1, 0.1); // Deep Charcoal
+    vec3 color2 = vec3(0.05, 0.05, 0.05); // Darker
+    
+    float noise = fract(sin(dot(uv ,vec2(12.9898,78.233))) * 43758.5453);
+    vec3 finalColor = mix(color1, color2, uv.y + sin(u_time * 0.2) * 0.5);
+    
+    // Add very subtle "structural" lines
+    float line = smoothstep(0.002, 0.0, abs(uv.x - 0.5 + sin(u_time * 0.1) * 0.2));
+    finalColor += line * 0.02;
+    
+    gl_FragColor = vec4(finalColor, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_1 -->
+<div class="absolute inset-0 hero-overlay -z-10 w-full h-full"></div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid grid-cols-1 md:grid-cols-12 gap-gutter relative z-10">
+<div class="md:col-span-8 md:col-start-1">
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em] mb-4 block">Odisha's Premier Construction Firm</span>
+<h1 class="font-display-xl text-headline-lg-mobile md:text-display-xl text-primary mb-6 leading-tight">
+                    Building Better.<br/>Engineering Legacies.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-10">
+                    Precision engineering meets uncompromising luxury. We deliver turnkey residential and commercial projects across Odisha, setting new standards in structural integrity and aesthetic perfection.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-tertiary-fixed-dim text-tertiary-container px-8 py-4 font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all duration-300 flex items-center justify-center gap-2">
+                        Get Free Consultation <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="border border-outline bg-transparent text-primary px-8 py-4 font-label-caps text-label-caps hover:bg-surface-variant transition-all duration-300">
+                        Explore Our Projects
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Packages & Estimator Container -->
+<section class="relative -mt-32 z-20 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Package Cards -->
+<div class="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-unit">
+<!-- Classic -->
+<div class="glass-panel p-6 flex flex-col justify-between min-h-[280px]">
+<div>
+<span class="font-label-caps text-label-caps text-secondary mb-2 block">TIER 01</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Classic</h3>
+<p class="font-mono-technical text-mono-technical text-on-surface-variant">₹1,400 / sq.ft</p>
+</div>
+<ul class="font-body-md text-[14px] text-on-surface-variant space-y-2 mt-4 flex-grow border-t technical-line pt-4">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" data-icon="check">check</span> Standard Finishes</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" data-icon="check">check</span> Essential Automation</li>
+</ul>
+</div>
+<!-- Premium -->
+<div class="glass-panel p-6 flex flex-col justify-between min-h-[280px] bg-primary text-on-primary border-none shadow-lg transform md:-translate-y-4">
+<div>
+<span class="font-label-caps text-label-caps text-outline-variant mb-2 block">TIER 02</span>
+<h3 class="font-headline-md text-headline-md text-on-primary mb-1">Premium</h3>
+<p class="font-mono-technical text-mono-technical text-tertiary-fixed-dim">₹1,800 / sq.ft</p>
+</div>
+<ul class="font-body-md text-[14px] text-surface-variant space-y-2 mt-4 flex-grow border-t border-outline/30 pt-4">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" data-icon="check">check</span> Imported Marble</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" data-icon="check">check</span> Smart Home Ready</li>
+</ul>
+</div>
+<!-- Luxury -->
+<div class="glass-panel p-6 flex flex-col justify-between min-h-[280px]">
+<div>
+<span class="font-label-caps text-label-caps text-secondary mb-2 block">TIER 03</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Luxury</h3>
+<p class="font-mono-technical text-mono-technical text-on-surface-variant">₹2,500 / sq.ft</p>
+</div>
+<ul class="font-body-md text-[14px] text-on-surface-variant space-y-2 mt-4 flex-grow border-t technical-line pt-4">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" data-icon="check">check</span> Custom Italian Specs</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" data-icon="check">check</span> Full Automation</li>
+</ul>
+</div>
+</div>
+<!-- Cost Estimator Widget -->
+<div class="md:col-span-5 glass-panel p-8">
+<h3 class="font-headline-md text-headline-md text-primary mb-6 border-b technical-line pb-4 flex justify-between items-center">
+                    Instant Estimator
+                    <span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="calculate">calculate</span>
+</h3>
+<div class="space-y-6">
+<div>
+<label class="font-label-caps text-label-caps text-secondary block mb-2">Plot Area (Sq.Ft)</label>
+<input class="w-full bg-transparent border-0 border-b technical-line font-headline-md text-headline-md text-primary px-0 focus:ring-0 focus:border-tertiary-fixed-dim transition-colors" type="number" value="1500"/>
+</div>
+<div>
+<label class="font-label-caps text-label-caps text-secondary block mb-2">Number of Floors</label>
+<div class="flex gap-2 p-1 bg-surface-container rounded">
+<button class="flex-1 py-2 font-label-caps text-label-caps bg-primary text-on-primary">G+1</button>
+<button class="flex-1 py-2 font-label-caps text-label-caps text-secondary hover:bg-surface-variant">G+2</button>
+<button class="flex-1 py-2 font-label-caps text-label-caps text-secondary hover:bg-surface-variant">G+3</button>
+</div>
+</div>
+<div class="pt-6 border-t technical-line mt-6">
+<span class="font-label-caps text-label-caps text-secondary block mb-1">Estimated Budget</span>
+<div class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-primary text-tertiary-fixed-dim">
+                            ₹ 44.90 <span class="font-headline-md text-[20px] text-secondary">Lakhs</span>
+</div>
+<p class="font-body-md text-[12px] text-on-surface-variant mt-2">*This is an approximate estimate based on Premium Tier pricing.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Founder Desk -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-5 order-2 md:order-1">
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em] mb-4 block">The Founder's Desk</span>
+<blockquote class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary leading-tight mb-8">
+                    "Our mission is to replace compromise with craftsmanship. Every foundation we lay is a testament to precision engineering."
+                </blockquote>
+<div class="flex items-center gap-4 border-t technical-line pt-6">
+<div>
+<h4 class="font-headline-md text-[18px] text-primary">Ranjit Das</h4>
+<p class="font-label-caps text-label-caps text-secondary">Founder &amp; Managing Director</p>
+</div>
+</div>
+</div>
+<div class="md:col-span-6 md:col-start-7 order-1 md:order-2 mb-8 md:mb-0">
+<div class="relative w-full aspect-[4/5] bg-surface-variant overflow-hidden" data-alt="A highly detailed professional portrait of a distinguished male architect/engineer standing in a minimalist, high-end modern office. He is wearing a tailored charcoal suit. The office features raw concrete walls, subtle warm lighting, and a drafting table with architectural blueprints. The aesthetic is high-end editorial photography, crisp, professional, conveying unshakable quality and technical mastery. High contrast, sharp focus." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_5qee1YhawR6RYC_J7hFA6n9too0CPPPHHGBv6BH-0RPjwt0IzWKAMEybdkzUVIA-UrkBDpOiown1kqW8ymg8sGsJmAp9CI77GHmhO2FhbKZ3ffbUVENf14UEQ8FeT58m1IZfSvxLvHkb5UJ9Qs-U-H412bLOACeTNBnf450ipcr3hSczzEJR1rx8BZugEWYaOFgnkXsldvl-e8R1xWDubphv_h1c-kCTqdDZ0F3ALZmxme6OHkkM')">
+<!-- Image Placeholder -->
+<div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-primary to-transparent">
+<span class="material-symbols-outlined text-on-primary text-[48px] opacity-20" data-icon="format_quote">format_quote</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Sapioluxe Standard (Dark Section) -->
+<section class="bg-primary text-on-primary py-section-gap w-full px-margin-mobile md:px-margin-desktop mb-section-gap">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<span class="font-label-caps text-label-caps text-tertiary-fixed-dim uppercase tracking-[0.2em] mb-4 block">The Sapioluxe Standard</span>
+<h2 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-on-primary">Uncompromising Quality</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-x-gutter gap-y-16">
+<!-- Standard 1 -->
+<div class="md:border-r border-outline-variant/20 md:pr-gutter relative">
+<span class="font-mono-technical text-[48px] text-surface-tint opacity-30 absolute -top-8 -left-4 font-bold">01</span>
+<h3 class="font-headline-md text-headline-md text-tertiary-fixed-dim mb-3 relative z-10">Structural Safety</h3>
+<p class="font-body-md text-surface-variant relative z-10">Earthquake-resistant designs engineered beyond standard codes, ensuring absolute safety for generations.</p>
+</div>
+<!-- Standard 2 -->
+<div class="md:border-r border-outline-variant/20 md:px-gutter relative">
+<span class="font-mono-technical text-[48px] text-surface-tint opacity-30 absolute -top-8 -left-4 font-bold">02</span>
+<h3 class="font-headline-md text-headline-md text-tertiary-fixed-dim mb-3 relative z-10">Fixed Price Lock</h3>
+<p class="font-body-md text-surface-variant relative z-10">Transparent cost modeling with zero hidden escalations. The price we quote is the price you pay.</p>
+</div>
+<!-- Standard 3 -->
+<div class="md:pl-gutter relative">
+<span class="font-mono-technical text-[48px] text-surface-tint opacity-30 absolute -top-8 -left-4 font-bold">03</span>
+<h3 class="font-headline-md text-headline-md text-tertiary-fixed-dim mb-3 relative z-10">240+ Quality Audits</h3>
+<p class="font-body-md text-surface-variant relative z-10">Rigorous multi-point inspections at every major construction milestone by independent quality assurance engineers.</p>
+</div>
+<!-- Standard 4 -->
+<div class="md:border-r border-outline-variant/20 md:pr-gutter relative">
+<span class="font-mono-technical text-[48px] text-surface-tint opacity-30 absolute -top-8 -left-4 font-bold">04</span>
+<h3 class="font-headline-md text-headline-md text-tertiary-fixed-dim mb-3 relative z-10">Premium Material Sourcing</h3>
+<p class="font-body-md text-surface-variant relative z-10">Direct procurement from top-tier manufacturers ensuring authenticity and superior longevity of finishes.</p>
+</div>
+<!-- Standard 5 -->
+<div class="md:border-r border-outline-variant/20 md:px-gutter relative">
+<span class="font-mono-technical text-[48px] text-surface-tint opacity-30 absolute -top-8 -left-4 font-bold">05</span>
+<h3 class="font-headline-md text-headline-md text-tertiary-fixed-dim mb-3 relative z-10">On-Time Delivery Guarantee</h3>
+<p class="font-body-md text-surface-variant relative z-10">Advanced project management methodologies ensuring strict adherence to timelines without compromising quality.</p>
+</div>
+<!-- Standard 6 -->
+<div class="md:pl-gutter relative">
+<span class="font-mono-technical text-[48px] text-surface-tint opacity-30 absolute -top-8 -left-4 font-bold">06</span>
+<h3 class="font-headline-md text-headline-md text-tertiary-fixed-dim mb-3 relative z-10">Lifetime Support</h3>
+<p class="font-body-md text-surface-variant relative z-10">Comprehensive warranty coverage and dedicated post-handover maintenance services for complete peace of mind.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Turnkey Capabilities -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-section-gap">
+<div class="mb-12 border-b technical-line pb-4 flex justify-between items-end">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em] mb-2 block">Our Expertise</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">Turnkey Capabilities</h2>
+</div>
+<button class="hidden md:flex font-label-caps text-label-caps text-primary items-center gap-2 hover:text-tertiary-fixed-dim transition-colors">
+                View All Services <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Service 1 -->
+<div class="group cursor-pointer">
+<div class="w-full aspect-[16/9] bg-surface-variant mb-4 overflow-hidden" data-alt="A highly detailed architectural photograph of a luxurious modern residential villa exterior at twilight. The house features large glass windows, clean geometric lines, and is illuminated by warm, inviting lighting. The aesthetic is high-end, minimalist, and serene, showcasing premium construction quality and elegant design. Deep charcoal night sky contrasting with the warm interior glow." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBAgHf7zKrCDQioedkPBjHBRRivSxk3sHrBI9Rs22aocV2s3S9iYni1bxpa3Q-BEs-7unY3uVlf2kGSxBK7HClS4De0-IzS8UGbMbyMhkpd1zJ0GJKPXRDRMrZE4JX9KMHo9fILM2JBq57dvvGiX7DHGEc8W-85XojaQKlYm5pcNo0ExWpU6A5PRJ0eIL4UmfQpwjk4XfRZ8F7-D1se0bDveVa5bADpztIg2vyl0ghfsVKeXhVVjnZA')">
+</div>
+<h3 class="font-headline-md text-[20px] text-primary mb-2 group-hover:text-tertiary-fixed-dim transition-colors">Residential Construction</h3>
+<p class="font-body-md text-on-surface-variant">Bespoke villas and luxury apartments engineered for elevated living.</p>
+</div>
+<!-- Service 2 -->
+<div class="group cursor-pointer">
+<div class="w-full aspect-[16/9] bg-surface-variant mb-4 overflow-hidden" data-alt="A highly detailed architectural photograph of a sleek, contemporary commercial office building facade during the day. The building features a minimalist glass curtain wall reflecting the blue sky, accented by sharp concrete structural elements. The aesthetic is high-end, professional, conveying strength, innovation, and architectural precision. Crisp, bright lighting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBMMPDN-YABBv2Sb5eh7QMKDnpnhgxv_indP5KHxvqY7hKRRZxXX-CqPJakFel1o8rbWTbtp8UNwVVpEMxLOk-B1RQv_5W6wwwobeXgzS1XURUcsXRjQEDQj81ny0IzIcIs-ONp_Lrnmq9_P3opLJgApYsaH_MW8VF6YMy3QVj8VF0-sinS_THrHesKOpk24whR19WckycsshvurJ85WQxj4tEnFo0RgMjsAcm8CMLBavqx5d6zYPTf')">
+</div>
+<h3 class="font-headline-md text-[20px] text-primary mb-2 group-hover:text-tertiary-fixed-dim transition-colors">Commercial Spaces</h3>
+<p class="font-body-md text-on-surface-variant">High-performance corporate headquarters and retail environments.</p>
+</div>
+<!-- Service 3 -->
+<div class="group cursor-pointer">
+<div class="w-full aspect-[16/9] bg-surface-variant mb-4 overflow-hidden flex items-center justify-center border technical-line bg-surface">
+<span class="material-symbols-outlined text-[64px] text-outline-variant" data-icon="architecture">architecture</span>
+</div>
+<h3 class="font-headline-md text-[20px] text-primary mb-2 group-hover:text-tertiary-fixed-dim transition-colors">Civil Engineering &amp; Design</h3>
+<p class="font-body-md text-on-surface-variant">Comprehensive structural planning and architectural drafting services.</p>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="bg-surface-container py-section-gap w-full px-margin-mobile md:px-margin-desktop text-center border-t border-b technical-line">
+<div class="max-w-3xl mx-auto">
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em] mb-4 block">Start Your Project</span>
+<h2 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-primary mb-8">Let's Build Something That Lasts.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10">Schedule a complimentary consultation with our principal engineers to discuss your vision.</p>
+<button class="bg-primary text-on-primary px-10 py-5 font-label-caps text-label-caps hover:bg-tertiary-fixed-dim hover:text-tertiary-container transition-all duration-300">
+                Request a Consultation
+            </button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-primary dark:bg-surface-container-lowest w-full relative border-t border-on-primary-fixed-variant/20 px-margin-desktop py-section-gap md:px-margin-desktop px-margin-mobile">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Brand -->
+<div class="md:col-span-1">
+<div class="font-headline-lg text-headline-lg font-bold text-on-primary dark:text-on-surface mb-6 uppercase tracking-[0.1em]">
+                    Sapioluxe
+                </div>
+<p class="font-body-md text-body-md text-on-primary-fixed-variant dark:text-on-secondary-container">
+                    © 2024 Sapioluxe Engicon.<br/>All rights reserved.<br/>Precision in Engineering.
+                </p>
+</div>
+<!-- Links 1 -->
+<div class="flex flex-col space-y-4">
+<span class="font-label-caps text-label-caps text-surface-tint uppercase tracking-[0.1em]">Company</span>
+<a class="font-body-md text-body-md text-on-primary-fixed-variant dark:text-on-secondary-container hover:text-on-primary hover:underline transition-all" href="#">Project Gallery</a>
+<a class="font-body-md text-body-md text-on-primary-fixed-variant dark:text-on-secondary-container hover:text-on-primary hover:underline transition-all" href="#">Odisha Locations</a>
+<a class="font-body-md text-body-md text-on-primary-fixed-variant dark:text-on-secondary-container hover:text-on-primary hover:underline transition-all" href="#">Contact Us</a>
+</div>
+<!-- Links 2 -->
+<div class="flex flex-col space-y-4">
+<span class="font-label-caps text-label-caps text-surface-tint uppercase tracking-[0.1em]">Legal</span>
+<a class="font-body-md text-body-md text-on-primary-fixed-variant dark:text-on-secondary-container hover:text-on-primary hover:underline transition-all" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-on-primary-fixed-variant dark:text-on-secondary-container hover:text-on-primary hover:underline transition-all" href="#">Privacy Policy</a>
+</div>
+<!-- Social/Address -->
+<div class="flex flex-col space-y-4">
+<span class="font-label-caps text-label-caps text-surface-tint uppercase tracking-[0.1em]">Headquarters</span>
+<p class="font-body-md text-body-md text-on-primary-fixed-variant dark:text-on-secondary-container">
+                    Bhubaneswar, Odisha<br/>
+                    India
+                </p>
+<div class="flex gap-4 mt-4">
+<a class="text-on-primary-fixed-variant hover:text-on-primary transition-colors" href="#"><span class="material-symbols-outlined" data-icon="location_on">location_on</span></a>
+<a class="text-on-primary-fixed-variant hover:text-on-primary transition-colors" href="#"><span class="material-symbols-outlined" data-icon="mail">mail</span></a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

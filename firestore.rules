@@ -1,0 +1,101 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.admin == true ||
+        (
+          exists(/databases/$(database)/documents/admins/$(request.auth.uid)) &&
+          get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.active == true &&
+          get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'admin'
+        )
+      );
+    }
+
+    // Public website content - Readable by anyone, writable only by Admins
+    match /siteSettings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /homepage/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /about/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /founder/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /services/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /packages/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /projects/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /estimator/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /testimonials/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /gallery/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /contact/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /branding/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Client Inquiries / Leads - Public users can ONLY create. Only Admins can read, update, or delete.
+    match /leads/{leadId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Admin accounts allowlist - User can read & manage their OWN admin doc
+    match /admins/{userId} {
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+      allow create, update: if isAuthenticated() && request.auth.uid == userId;
+      allow read, write: if isAdmin();
+    }
+
+    // Security logs & failed attempt audit trail
+    match /securityLogs/{logId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}
