@@ -190,8 +190,10 @@ export interface HomepageContent {
   heroCtaPrimaryLink?: string;
   heroCtaSecondary: string;
   heroCtaSecondaryLink?: string;
-  heroVideoUrl: string;
+  heroVideoUrl?: string;
   heroPosterUrl?: string;
+  backgroundImages?: string[];
+  heroBackgroundImages?: string[];
   heroOverlayIntensity?: number; // 0 to 100
   stats: { label: string; value: string; icon: string }[];
   updatedAt?: string;

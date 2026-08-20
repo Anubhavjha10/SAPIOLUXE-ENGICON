@@ -365,7 +365,13 @@ export const INITIAL_HOMEPAGE_DATA: HomepageContent = {
   heroTagline: "PREMIER CONSTRUCTION FIRM ACROSS ODISHA & WEST BENGAL",
   heroTitle: 'Building Better.\nEngineering Legacies.',
   heroSubtitle: 'Precision engineering meets uncompromising luxury. We deliver turnkey residential and commercial projects across Odisha & West Bengal, setting new standards in structural integrity and aesthetic perfection.',
-  heroVideoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-architectural-blueprint-of-a-house-41551-large.mp4',
+  heroVideoUrl: '',
+  backgroundImages: [
+    'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=2000&q=80',
+    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80',
+    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80',
+    'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2000&q=80',
+  ],
   heroCtaPrimary: 'Get Free Consultation',
   heroCtaSecondary: 'Explore Our Projects',
   stats: [

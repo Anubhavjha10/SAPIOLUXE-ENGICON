@@ -1,7 +1,7 @@
 import React from 'react';
 import { useOutletContext, Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { VideoHero } from '../components/VideoHero';
+import { HeroSlideshow } from '../components/HeroSlideshow';
 import { PackageCard } from '../components/PackageCard';
 import { Estimator } from '../components/Estimator';
 import { FounderSection } from '../components/FounderSection';
@@ -32,9 +32,9 @@ export const Home: React.FC = () => {
 
   return (
     <div className="w-full">
-      {/* 1 & 2 & 3. Hero Section with Cinematic Video / Shader Background */}
+      {/* 1 & 2 & 3. Hero Section with Cinematic Background Image Slideshow */}
       <section className="relative min-h-[80vh] md:min-h-[85vh] flex items-center pt-28 pb-20 overflow-hidden bg-primary">
-        <VideoHero videoUrl={homepageData?.heroVideoUrl} />
+        <HeroSlideshow images={homepageData?.backgroundImages || homepageData?.heroBackgroundImages} />
 
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid grid-cols-1 md:grid-cols-12 gap-gutter relative z-10">
           <div className="md:col-span-8 md:col-start-1">
