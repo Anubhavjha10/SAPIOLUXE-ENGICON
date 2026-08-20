@@ -1,13 +1,19 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { PackageCard } from '../components/PackageCard';
 import { CTASection } from '../components/CTASection';
-import { usePackages } from '../hooks/useDataHooks';
+import { usePackages, useBrochures } from '../hooks/useDataHooks';
+import { Brochure } from '../types';
 import { formatINR } from '../utils/estimatorCalculator';
+import { getDrivePreviewUrl, getDriveDownloadUrl } from '../utils/driveUrlHelper';
+import { FileText, Eye, Download, X } from 'lucide-react';
 
 export const PackagesPage: React.FC = () => {
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: () => void }>();
   const { packages } = usePackages();
+  const { brochures } = useBrochures();
+
+  const [previewBrochure, setPreviewBrochure] = useState<Brochure | null>(null);
 
   // Filter published packages & sort by display order
   const sortedPackages = useMemo(() => {
@@ -15,6 +21,13 @@ export const PackagesPage: React.FC = () => {
       .filter((pkg) => pkg.isPublished !== false)
       .sort((a, b) => (a.order || 0) - (b.order || 0));
   }, [packages]);
+
+  // Filter active brochures & sort by display order
+  const activeBrochures = useMemo(() => {
+    return [...brochures]
+      .filter((b) => b.active !== false)
+      .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+  }, [brochures]);
 
   // Aggregate all unique material specification names across all packages
   const materialSpecNames = useMemo(() => {
@@ -156,6 +169,120 @@ export const PackagesPage: React.FC = () => {
           </table>
         </div>
       </section>
+
+      {/* Downloadable Brochures Section */}
+      {activeBrochures.length > 0 && (
+        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-section-gap">
+          <div className="mb-8 border-b technical-line pb-4 flex justify-between items-end">
+            <div>
+              <span className="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em] mb-2 block">
+                Documentation & Specification Guides
+              </span>
+              <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary font-bold">
+                Download Our Brochures
+              </h2>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+            {activeBrochures.map((brochure) => (
+              <div
+                key={brochure.id}
+                className="bg-surface ghost-border p-6 flex flex-col justify-between hover:border-tertiary-fixed-dim/50 transition-all group shadow-sm"
+              >
+                <div className="space-y-4">
+                  <div className="w-12 h-12 bg-primary/10 text-primary flex items-center justify-center rounded-sm group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                    <FileText className="w-6 h-6 text-tertiary-fixed-dim group-hover:text-tertiary-fixed-dim" />
+                  </div>
+                  <div>
+                    <h3 className="font-headline-md text-lg font-bold text-primary mb-1">
+                      {brochure.title}
+                    </h3>
+                    {brochure.description && (
+                      <p className="font-body-md text-xs text-on-surface-variant leading-relaxed">
+                        {brochure.description}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t technical-line mt-6 flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setPreviewBrochure(brochure)}
+                    className="flex-1 bg-surface-container border border-outline-variant hover:border-primary text-primary py-2.5 px-4 font-label-caps text-xs font-bold flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                  >
+                    <Eye className="w-4 h-4 text-tertiary-fixed-dim" />
+                    <span>View</span>
+                  </button>
+                  <a
+                    href={getDriveDownloadUrl(brochure.driveUrl)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    className="flex-1 bg-primary text-on-primary hover:bg-tertiary-fixed-dim hover:text-tertiary-container py-2.5 px-4 font-label-caps text-xs font-bold flex items-center justify-center gap-2 transition-colors text-center"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>Download ↓</span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* PDF Viewer Modal */}
+      {previewBrochure && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
+          <div className="bg-surface border border-outline-variant w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl overflow-hidden relative">
+            {/* Modal Header */}
+            <div className="p-4 bg-primary text-on-primary flex justify-between items-center border-b border-outline-variant">
+              <div className="flex items-center gap-3">
+                <FileText className="w-5 h-5 text-tertiary-fixed-dim" />
+                <div>
+                  <h3 className="font-headline-md text-base font-bold text-on-primary">
+                    {previewBrochure.title}
+                  </h3>
+                  <p className="font-body-md text-xs text-surface-variant hidden sm:block">
+                    Interactive PDF Document Viewer
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <a
+                  href={getDriveDownloadUrl(previewBrochure.driveUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download
+                  className="bg-tertiary-fixed-dim text-tertiary-container px-3.5 py-1.5 font-label-caps text-xs font-bold flex items-center gap-1.5 hover:brightness-110 transition-all"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Download PDF</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setPreviewBrochure(null)}
+                  className="p-1.5 text-surface-variant hover:text-on-primary rounded-sm transition-colors cursor-pointer"
+                  aria-label="Close document preview"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body: Google Drive Preview iframe */}
+            <div className="flex-1 bg-surface-container-lowest relative overflow-hidden">
+              <iframe
+                src={getDrivePreviewUrl(previewBrochure.driveUrl)}
+                className="w-full h-full border-0"
+                title={previewBrochure.title}
+                allow="autoplay"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <CTASection onOpenConsultation={onOpenConsultation} />
     </div>

@@ -12,6 +12,7 @@ import {
   ContactSettings,
   Inquiry,
   ServiceLocation,
+  Brochure,
 } from '../types';
 import { getHomepageContent, updateHomepageContent, subscribeToHomepageContent } from '../services/homepageService';
 import { getFounderData, updateFounderData, subscribeToFounderData } from '../services/founderService';
@@ -25,6 +26,7 @@ import { getGalleryImages, saveGalleryImage, deleteGalleryImage, subscribeToGall
 import { getContactSettings, updateContactSettings, subscribeToContactSettings } from '../services/contactService';
 import { getInquiries, submitInquiry, updateInquiryStatus, deleteInquiry, subscribeToInquiries } from '../services/inquiryService';
 import { getLocations, saveLocation, deleteLocation, subscribeToLocations, INITIAL_LOCATIONS_DATA } from '../services/locationService';
+import { getBrochures, saveBrochure, deleteBrochure, subscribeToBrochures, INITIAL_BROCHURES_DATA } from '../services/brochureService';
 import {
   INITIAL_HOMEPAGE_DATA,
   INITIAL_FOUNDER_DATA,
@@ -387,4 +389,31 @@ export const useLocations = () => {
   };
 
   return { locations, loading, save, remove };
+};
+
+export const useBrochures = () => {
+  const [brochures, setBrochures] = useState<Brochure[]>(INITIAL_BROCHURES_DATA);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getBrochures().then((res) => {
+      if (res && res.length > 0) setBrochures(res);
+      setLoading(false);
+    });
+    const sub = subscribeToBrochures((res) => {
+      if (res && res.length > 0) setBrochures(res);
+      setLoading(false);
+    });
+    return () => sub();
+  }, []);
+
+  const save = async (item: Brochure) => {
+    return await saveBrochure(item);
+  };
+
+  const remove = async (id: string) => {
+    return await deleteBrochure(id);
+  };
+
+  return { brochures, loading, save, remove };
 };

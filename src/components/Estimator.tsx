@@ -214,6 +214,10 @@ export const Estimator: React.FC<EstimatorProps> = ({
             <div className="space-y-2">
               {(activeConfig.addOns || []).map((addon) => {
                 const isChecked = selectedAddOnIds.includes(addon.id);
+                const unitStr = (addon.unit || '').trim().toLowerCase();
+                const isPerSqFt = unitStr.includes('sq') || unitStr.includes('per sq') || unitStr === 'per sq.ft.';
+                const displayRate = addon.price > 5000 && isPerSqFt ? Math.round(addon.price / 1500) : addon.price;
+
                 return (
                   <div
                     key={addon.id}
@@ -242,7 +246,7 @@ export const Estimator: React.FC<EstimatorProps> = ({
                       </div>
                     </div>
                     <div className="font-mono-technical text-xs font-bold text-tertiary-fixed-dim shrink-0 ml-2">
-                      +{formatINR(addon.price || 0)}
+                      {isPerSqFt ? `+₹${displayRate} / sq.ft.` : `+${formatINR(displayRate)}`}
                     </div>
                   </div>
                 );
@@ -265,7 +269,14 @@ export const Estimator: React.FC<EstimatorProps> = ({
             <p>Built-up Area: {(result?.builtUpArea || 0).toLocaleString()} sq.ft ({floorCount} floors)</p>
             <p>Base Construction: {formatINR(result?.baseConstructionCost || 0)}</p>
             {(result?.addOnsTotal || 0) > 0 && (
-              <p>Selected Add-ons ({result?.addOnsBreakdown?.length || 0}): +{formatINR(result.addOnsTotal)}</p>
+              <div className="pt-1.5 space-y-1">
+                <p className="font-bold text-primary">Selected Add-ons ({result?.addOnsBreakdown?.length || 0}): +{formatINR(result.addOnsTotal)}</p>
+                {result?.addOnsBreakdown?.map((item) => (
+                  <p key={item.id} className="pl-2 text-[11px] text-secondary border-l-2 border-tertiary-fixed-dim/60">
+                    • {item.name}: {item.quantity > 1 ? `${item.quantity.toLocaleString()} sq.ft × ₹${item.rate}/sq.ft = ` : ''}{formatINR(item.cost)}
+                  </p>
+                ))}
+              </div>
             )}
           </div>
 

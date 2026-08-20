@@ -11,6 +11,7 @@ import {
   INITIAL_INQUIRIES_DATA,
 } from '../data/mockData';
 import { INITIAL_LOCATIONS_DATA } from '../services/locationService';
+import { INITIAL_BROCHURES_DATA } from '../services/brochureService';
 import { BrandingSettings, AboutPageContent } from '../types';
 
 export const INITIAL_BRANDING_DATA: BrandingSettings = {
@@ -153,6 +154,14 @@ export async function initializeFirstTimeData(): Promise<void> {
     if (leads.length === 0) {
       for (const lead of INITIAL_INQUIRIES_DATA) {
         await saveDocumentData('leads', lead.id, lead);
+      }
+    }
+
+    // 13. Brochures Collection
+    const brochures = await getCollectionData('brochures');
+    if (brochures.length === 0) {
+      for (const b of INITIAL_BROCHURES_DATA) {
+        await saveDocumentData('brochures', b.id, b);
       }
     }
   } catch (err) {

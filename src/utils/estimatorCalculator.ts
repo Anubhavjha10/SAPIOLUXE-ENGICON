@@ -16,50 +16,56 @@ export const DEFAULT_ESTIMATOR_CONFIG: EstimatorConfig = {
     {
       id: 'compound_wall',
       name: 'Compound Wall & Gate',
-      price: 120000, // +₹1.2L
-      unit: 'Fixed',
+      price: 80, // ₹80 / sq.ft
+      unit: 'Per Sq.Ft.',
       description: 'RCC boundary wall with heavy forged iron security gate.',
       isDefaultSelected: false,
+      quantityBasis: 'plotArea',
     },
     {
       id: 'modular_kitchen',
       name: 'Modular Kitchen Fitout',
-      price: 180000, // +₹1.8L
-      unit: 'Fixed',
+      price: 120, // ₹120 / sq.ft
+      unit: 'Per Sq.Ft.',
       description: 'Acrylic high-gloss modular cabinets with soft-close hardware.',
       isDefaultSelected: true,
+      quantityBasis: 'builtUpArea',
     },
     {
       id: 'elevation_design',
       name: '3D Front Elevation Design',
-      price: 75000, // +₹75k
-      unit: 'Fixed',
+      price: 50, // ₹50 / sq.ft
+      unit: 'Per Sq.Ft.',
       description: 'Custom architectural 3D rendering & structural detailing.',
       isDefaultSelected: true,
+      quantityBasis: 'builtUpArea',
     },
     {
       id: 'borewell_tank',
       name: 'Borewell & Water Tank',
-      price: 95000, // +₹95k
-      unit: 'Fixed',
+      price: 65, // ₹65 / sq.ft
+      unit: 'Per Sq.Ft.',
       description: 'Deep subterranean water drilling + 2000L RCC storage tank.',
       isDefaultSelected: false,
+      quantityBasis: 'plotArea',
     },
     {
       id: 'false_ceiling',
       name: 'False Ceiling & LED Fitments',
-      price: 150000, // +₹1.5L
-      unit: 'Fixed',
+      price: 100, // ₹100 / sq.ft
+      unit: 'Per Sq.Ft.',
       description: 'Gypsum designer ceiling with ambient warm COB spotlights.',
       isDefaultSelected: false,
+      quantityBasis: 'builtUpArea',
     },
     {
       id: 'plan_sanction',
       name: 'Plan Sanction & Approval',
-      price: 35000, // +₹35k
-      unit: 'Fixed',
+      price: 25, // ₹25 / sq.ft
+      unit: 'Per Sq.Ft.',
       description: 'Complete municipal clearance & BDA/CMC/KMC sanction filing.',
       isDefaultSelected: true,
+      quantityBasis: 'builtUpArea',
     },
   ],
 };
@@ -81,18 +87,43 @@ export function calculateEstimate(
   const ratePerSqFt = ratesRecord[packageId] || config.rates.premium || 1750;
   const baseConstructionCost = builtUpArea * ratePerSqFt;
 
-  const addOnsBreakdown: { id: string; name: string; cost: number }[] = [];
+  const addOnsBreakdown: { id: string; name: string; rate: number; unit: string; quantity: number; cost: number }[] = [];
   let addOnsTotal = 0;
 
   selectedAddOnIds.forEach((addonId) => {
     const addon = config.addOns.find((item) => item.id === addonId);
-    if (addon) {
+    if (addon && addon.active !== false) {
+      const unitStr = (addon.unit || '').trim().toLowerCase();
+      const isPerSqFt = unitStr.includes('sq') || unitStr.includes('per sq') || unitStr === 'per sq.ft.';
+      
+      let quantity = 1;
+      let effectiveRate = addon.price;
+
+      if (isPerSqFt) {
+        // If legacy high price was saved (e.g. 120000), derive per sq.ft rate based on 1500 sq.ft baseline
+        if (effectiveRate > 5000) {
+          effectiveRate = Math.round(effectiveRate / 1500);
+        }
+        
+        // Dynamic quantity calculation based on area & add-on type
+        if (addon.quantityBasis === 'plotArea' || addon.id === 'compound_wall' || addon.id === 'borewell_tank') {
+          quantity = validPlotArea;
+        } else {
+          quantity = builtUpArea;
+        }
+      }
+
+      const cost = Math.round(quantity * effectiveRate);
+
       addOnsBreakdown.push({
         id: addon.id,
         name: addon.name,
-        cost: addon.price,
+        rate: effectiveRate,
+        unit: addon.unit || (isPerSqFt ? 'Per Sq.Ft.' : 'Lump Sum'),
+        quantity,
+        cost,
       });
-      addOnsTotal += addon.price;
+      addOnsTotal += cost;
     }
   });
 

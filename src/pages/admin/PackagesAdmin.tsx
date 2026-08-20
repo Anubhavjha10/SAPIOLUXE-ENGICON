@@ -1,19 +1,54 @@
 import React, { useState } from 'react';
-import { usePackages } from '../../hooks/useDataHooks';
-import { Package, PackageSpec } from '../../types';
+import { usePackages, useBrochures } from '../../hooks/useDataHooks';
+import { Package, PackageSpec, Brochure } from '../../types';
 import { Modal } from '../../components/Modal';
 import { ImageUploader } from '../../components/ImageUploader';
-import { Plus, Edit2, Trash2, Shield, Wrench, Sparkles, Check, ListPlus, Layers } from 'lucide-react';
+import { getDrivePreviewUrl, getDriveDownloadUrl } from '../../utils/driveUrlHelper';
+import { Plus, Edit2, Trash2, Shield, Wrench, Sparkles, Check, ListPlus, Layers, FileText, Eye, Download } from 'lucide-react';
 
 export const PackagesAdmin: React.FC = () => {
   const { packages, save: savePkg, remove: removePkg } = usePackages();
+  const { brochures, save: saveBrochure, remove: removeBrochure } = useBrochures();
+
   const [editingPkg, setEditingPkg] = useState<Partial<Package> | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'basic' | 'features' | 'materials'>('basic');
 
+  const [editingBrochure, setEditingBrochure] = useState<Partial<Brochure> | null>(null);
+  const [isBrochureModalOpen, setIsBrochureModalOpen] = useState(false);
+
   const [newFeatureText, setNewFeatureText] = useState('');
   const [newSpecName, setNewSpecName] = useState('');
   const [newSpecValue, setNewSpecValue] = useState('');
+
+  const handleOpenBrochureModal = (brochure?: Brochure) => {
+    if (brochure) {
+      setEditingBrochure({ ...brochure });
+    } else {
+      setEditingBrochure({
+        id: `brochure_${Date.now()}`,
+        title: '',
+        description: '',
+        driveUrl: '',
+        displayOrder: (brochures.length || 0) + 1,
+        active: true,
+      });
+    }
+    setIsBrochureModalOpen(true);
+  };
+
+  const handleSaveBrochure = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingBrochure?.title || !editingBrochure?.driveUrl) return;
+    await saveBrochure(editingBrochure as Brochure);
+    setIsBrochureModalOpen(false);
+  };
+
+  const handleDeleteBrochure = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this brochure?')) {
+      await removeBrochure(id);
+    }
+  };
 
   const handleOpenModal = (pkg?: Package) => {
     if (pkg) {
@@ -209,6 +244,97 @@ export const PackagesAdmin: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Brochures CMS Section */}
+      <div className="pt-8 border-t border-outline-variant space-y-6">
+        <div className="flex justify-between items-end border-b border-outline-variant pb-4">
+          <div>
+            <h2 className="font-headline-lg text-xl font-bold text-primary">Brochures & Specification Downloads</h2>
+            <p className="font-body-md text-xs text-secondary">
+              Manage downloadable PDF brochures and specification guides. Paste standard Google Drive links.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => handleOpenBrochureModal()}
+            className="bg-primary text-on-primary px-5 py-2.5 font-label-caps text-xs flex items-center gap-2 font-bold cursor-pointer hover:bg-tertiary-fixed-dim hover:text-tertiary-container transition-all"
+          >
+            <Plus className="w-4 h-4" /> Add Brochure
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          {brochures.map((item) => (
+            <div
+              key={item.id}
+              className={`bg-surface border p-5 space-y-4 flex flex-col justify-between transition-all ${
+                item.active ? 'border-outline-variant' : 'border-outline-variant/40 opacity-60'
+              }`}
+            >
+              <div className="space-y-3">
+                <div className="flex justify-between items-start">
+                  <span className="font-mono-technical text-xs font-bold text-tertiary-fixed-dim">
+                    Order #{item.displayOrder}
+                  </span>
+                  <span
+                    className={`text-[10px] font-label-caps px-2 py-0.5 font-bold ${
+                      item.active ? 'bg-emerald-500/10 text-emerald-600' : 'bg-surface-variant text-secondary'
+                    }`}
+                  >
+                    {item.active ? 'ACTIVE' : 'DISABLED'}
+                  </span>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <FileText className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <h3 className="font-headline-md text-base font-bold text-primary">{item.title}</h3>
+                    {item.description && (
+                      <p className="font-body-md text-xs text-secondary mt-1">{item.description}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-outline-variant/40">
+                  <span className="text-[11px] font-mono-technical text-secondary block truncate">
+                    {item.driveUrl || 'No Link Set'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center pt-4 border-t border-outline-variant gap-2">
+                <a
+                  href={getDrivePreviewUrl(item.driveUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-label-caps font-bold text-primary hover:text-tertiary-fixed-dim flex items-center gap-1"
+                >
+                  <Eye className="w-3.5 h-3.5" /> Test Preview
+                </a>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleOpenBrochureModal(item)}
+                    className="p-1.5 text-primary hover:text-tertiary-fixed-dim cursor-pointer"
+                    title="Edit Brochure"
+                  >
+                    <Edit2 className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteBrochure(item.id)}
+                    className="p-1.5 text-error hover:text-error/80 cursor-pointer"
+                    title="Delete Brochure"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {isModalOpen && editingPkg && (
@@ -526,6 +652,102 @@ export const PackagesAdmin: React.FC = () => {
               </div>
             </form>
           </div>
+        </Modal>
+      )}
+
+      {isBrochureModalOpen && editingBrochure && (
+        <Modal
+          isOpen={isBrochureModalOpen}
+          onClose={() => setIsBrochureModalOpen(false)}
+          title={editingBrochure.title ? `Edit Brochure` : `Add New Brochure`}
+        >
+          <form onSubmit={handleSaveBrochure} className="space-y-4">
+            <div>
+              <label className="block font-label-caps text-xs text-secondary mb-1">
+                Brochure Title *
+              </label>
+              <input
+                type="text"
+                required
+                value={editingBrochure.title || ''}
+                onChange={(e) => setEditingBrochure({ ...editingBrochure, title: e.target.value })}
+                placeholder="e.g. Residential Construction Brochure"
+                className="w-full bg-surface-container border border-outline-variant px-3 py-2 text-sm text-primary"
+              />
+            </div>
+
+            <div>
+              <label className="block font-label-caps text-xs text-secondary mb-1">
+                Short Description (Optional)
+              </label>
+              <textarea
+                rows={2}
+                value={editingBrochure.description || ''}
+                onChange={(e) => setEditingBrochure({ ...editingBrochure, description: e.target.value })}
+                placeholder="e.g. Complete construction packages, architectural floor plans & material specs."
+                className="w-full bg-surface-container border border-outline-variant px-3 py-2 text-sm text-primary"
+              />
+            </div>
+
+            <div>
+              <label className="block font-label-caps text-xs text-secondary mb-1">
+                Google Drive Link *
+              </label>
+              <input
+                type="url"
+                required
+                value={editingBrochure.driveUrl || ''}
+                onChange={(e) => setEditingBrochure({ ...editingBrochure, driveUrl: e.target.value })}
+                placeholder="https://drive.google.com/file/d/FILE_ID/view?usp=sharing"
+                className="w-full bg-surface-container border border-outline-variant px-3 py-2 text-sm text-primary font-mono-technical text-xs"
+              />
+              <p className="text-[11px] text-secondary mt-1">
+                Paste standard Google Drive share link. Automatically converted for previewing and direct downloading.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block font-label-caps text-xs text-secondary mb-1">
+                  Display Order
+                </label>
+                <input
+                  type="number"
+                  value={editingBrochure.displayOrder ?? 1}
+                  onChange={(e) => setEditingBrochure({ ...editingBrochure, displayOrder: Number(e.target.value) })}
+                  className="w-full bg-surface-container border border-outline-variant px-3 py-2 text-sm text-primary"
+                />
+              </div>
+
+              <div className="flex items-center pt-6">
+                <label className="flex items-center gap-2 text-xs font-label-caps text-primary cursor-pointer font-bold">
+                  <input
+                    type="checkbox"
+                    checked={editingBrochure.active ?? true}
+                    onChange={(e) => setEditingBrochure({ ...editingBrochure, active: e.target.checked })}
+                    className="accent-primary w-4 h-4"
+                  />
+                  <span>Active (Visible)</span>
+                </label>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-outline-variant flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setIsBrochureModalOpen(false)}
+                className="px-4 py-2 border border-outline-variant text-secondary text-xs font-label-caps font-bold cursor-pointer hover:bg-surface-container"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="bg-primary text-on-primary px-6 py-2 font-label-caps text-xs font-bold cursor-pointer hover:bg-tertiary-fixed-dim hover:text-tertiary-container transition-all"
+              >
+                Save Brochure to Firestore
+              </button>
+            </div>
+          </form>
         </Modal>
       )}
     </div>

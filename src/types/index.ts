@@ -58,6 +58,17 @@ export interface Package {
   updatedAt?: string;
 }
 
+export interface Brochure {
+  id: string;
+  title: string;
+  description?: string;
+  driveUrl: string;
+  displayOrder: number;
+  active: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface Project {
   id: string;
   slug?: string;
@@ -84,11 +95,12 @@ export interface Project {
 export interface AddOnItem {
   id: string;
   name: string;
-  price: number; // in INR
-  unit: string;  // e.g. "lump sum", "sq.ft"
+  price: number; // Rate per unit (e.g. 80 for ₹80/sq.ft) or lump sum amount
+  unit: string;  // e.g. "Per Sq.Ft.", "Lump Sum", "Fixed", "sq.ft"
   description: string;
   isDefaultSelected?: boolean;
   active?: boolean;
+  quantityBasis?: 'builtUpArea' | 'plotArea' | 'fixed';
 }
 
 export interface LocationRate {
@@ -131,7 +143,7 @@ export interface EstimatorResult {
   builtUpArea: number;
   ratePerSqFt: number;
   baseConstructionCost: number;
-  addOnsBreakdown: { id: string; name: string; cost: number }[];
+  addOnsBreakdown: { id: string; name: string; rate: number; unit: string; quantity: number; cost: number }[];
   addOnsTotal: number;
   locationAdjustment?: number;
   estimatedTotalBudget: number; // in INR
