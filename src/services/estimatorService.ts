@@ -25,6 +25,29 @@ export const updateEstimatorConfig = async (config: EstimatorConfig): Promise<Es
   cachedConfig = updated;
   try {
     await saveDocumentData(COLLECTION, DOC_ID, updated);
+
+    // Synchronize package rates so both Estimator CMS and Packages CMS reflect the same single source of truth
+    if (config.rates) {
+      const packageIds: ('classic' | 'premium' | 'luxury')[] = ['classic', 'premium', 'luxury'];
+      for (const pkgId of packageIds) {
+        const newRate = config.rates[pkgId];
+        if (typeof newRate === 'number' && newRate > 0) {
+          try {
+            const existingPkg = await getDocumentData<any>('packages', pkgId);
+            if (existingPkg) {
+              await saveDocumentData('packages', pkgId, {
+                ...existingPkg,
+                pricePerSqFt: newRate,
+                ratePerSqFt: newRate,
+                updatedAt: new Date().toISOString(),
+              });
+            }
+          } catch (e) {
+            console.warn(`Failed to sync rate for package ${pkgId}`, e);
+          }
+        }
+      }
+    }
   } catch (err) {
     console.warn('Firestore update estimator config failed', err);
   }

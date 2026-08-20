@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Service } from '../types';
 
@@ -7,12 +8,9 @@ interface ServiceCardProps {
   onSelectService?: (service: Service) => void;
 }
 
-export const ServiceCard: React.FC<ServiceCardProps> = ({ service, onSelectService }) => {
+export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
   return (
-    <div
-      onClick={() => onSelectService && onSelectService(service)}
-      className="group cursor-pointer bg-surface/60 border border-outline-variant/30 hover:border-tertiary-fixed-dim transition-all duration-300 p-6 flex flex-col justify-between"
-    >
+    <div className="bg-surface/60 border border-outline-variant/30 hover:border-tertiary-fixed-dim transition-all duration-300 p-6 flex flex-col justify-between group">
       <div>
         <div className="w-full aspect-[16/9] bg-surface-variant mb-6 overflow-hidden relative">
           <img
@@ -49,14 +47,22 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, onSelectServi
         )}
       </div>
 
-      <div className="flex justify-between items-center border-t technical-line pt-4 mt-auto">
-        <span className="font-mono-technical text-xs text-secondary">
-          {service.startingPrice || 'Custom Quotation'}
-        </span>
-        <span className="font-label-caps text-xs text-primary group-hover:text-tertiary-fixed-dim flex items-center gap-1 font-semibold transition-colors">
-          Learn More <ArrowRight className="w-4 h-4" />
-        </span>
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 border-t technical-line pt-4 mt-auto">
+        <Link
+          to="/contact"
+          className="flex-1 py-2.5 px-3 text-center border border-primary/40 text-primary hover:bg-primary hover:text-on-primary transition-all duration-300 font-label-caps text-xs font-bold uppercase tracking-wider flex items-center justify-center"
+        >
+          Consultation
+        </Link>
+        <Link
+          to="/estimator"
+          className="flex-1 py-2.5 px-3 text-center bg-tertiary-fixed-dim text-tertiary-container hover:bg-primary hover:text-on-primary transition-all duration-300 font-label-caps text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-sm"
+        >
+          <span>Get Estimate</span>
+          <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+        </Link>
       </div>
     </div>
   );
 };
+

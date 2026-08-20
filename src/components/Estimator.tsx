@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Calculator, ArrowRight, Check, ShieldCheck } from 'lucide-react';
 import { EstimatorConfig, EstimatorCalculationInput } from '../types';
 import { DEFAULT_ESTIMATOR_CONFIG, calculateEstimate, formatINR } from '../utils/estimatorCalculator';
-import { usePackages } from '../hooks/useDataHooks';
+import { usePackages, useLocations, useEstimator } from '../hooks/useDataHooks';
 
 interface EstimatorProps {
   config?: EstimatorConfig;
@@ -11,11 +11,21 @@ interface EstimatorProps {
 }
 
 export const Estimator: React.FC<EstimatorProps> = ({
-  config = DEFAULT_ESTIMATOR_CONFIG,
+  config: passedConfig,
   onOpenConsultationWithEstimate,
   showFullDetails = false,
 }) => {
+  const { config: liveEstimatorConfig } = useEstimator();
   const { packages } = usePackages();
+  const { locations } = useLocations();
+
+  const activeLocations = useMemo(() => {
+    return locations
+      .filter((loc) => loc.active !== false)
+      .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+  }, [locations]);
+
+  const [selectedLocation, setSelectedLocation] = useState<string>('Odisha');
   const [plotArea, setPlotArea] = useState<number>(1500);
   const [floorCount, setFloorCount] = useState<'G' | 'G+1' | 'G+2' | 'G+3'>('G+1');
   const [packageId, setPackageId] = useState<'classic' | 'premium' | 'luxury'>('premium');
@@ -25,16 +35,14 @@ export const Estimator: React.FC<EstimatorProps> = ({
     'plan_sanction',
   ]);
 
-  // Construct active config by incorporating Firestore package rates safely
+  // Construct active config by incorporating real-time Firestore estimator config and package rates safely
   const activeConfig: EstimatorConfig = useMemo(() => {
-    const defaultRates = {
-      classic: 1400,
-      premium: 1750,
-      luxury: 2200,
-    };
+    const sourceConfig = passedConfig || liveEstimatorConfig || DEFAULT_ESTIMATOR_CONFIG;
+
     const baseRates = {
-      ...defaultRates,
-      ...(config?.rates || {}),
+      classic: sourceConfig?.rates?.classic ?? DEFAULT_ESTIMATOR_CONFIG.rates.classic,
+      premium: sourceConfig?.rates?.premium ?? DEFAULT_ESTIMATOR_CONFIG.rates.premium,
+      luxury: sourceConfig?.rates?.luxury ?? DEFAULT_ESTIMATOR_CONFIG.rates.luxury,
     };
 
     if (Array.isArray(packages)) {
@@ -50,20 +58,20 @@ export const Estimator: React.FC<EstimatorProps> = ({
 
     return {
       rates: baseRates,
-      floorMultipliers: config?.floorMultipliers || DEFAULT_ESTIMATOR_CONFIG.floorMultipliers,
-      addOns: config?.addOns || DEFAULT_ESTIMATOR_CONFIG.addOns,
+      floorMultipliers: sourceConfig?.floorMultipliers || DEFAULT_ESTIMATOR_CONFIG.floorMultipliers,
+      addOns: sourceConfig?.addOns || DEFAULT_ESTIMATOR_CONFIG.addOns,
     };
-  }, [config, packages]);
+  }, [passedConfig, liveEstimatorConfig, packages]);
 
   const input: EstimatorCalculationInput = useMemo(
     () => ({
-      location: 'Bhubaneswar',
+      location: selectedLocation,
       plotArea,
       floorCount,
       packageId,
       selectedAddOnIds,
     }),
-    [plotArea, floorCount, packageId, selectedAddOnIds]
+    [selectedLocation, plotArea, floorCount, packageId, selectedAddOnIds]
   );
 
   const result = useMemo(() => calculateEstimate(input, activeConfig), [input, activeConfig]);
@@ -80,9 +88,9 @@ export const Estimator: React.FC<EstimatorProps> = ({
     }
   };
 
-  const classicRate = activeConfig.rates?.classic ?? 1400;
-  const premiumRate = activeConfig.rates?.premium ?? 1750;
-  const luxuryRate = activeConfig.rates?.luxury ?? 2200;
+  const classicRate = activeConfig.rates?.classic ?? DEFAULT_ESTIMATOR_CONFIG.rates.classic;
+  const premiumRate = activeConfig.rates?.premium ?? DEFAULT_ESTIMATOR_CONFIG.rates.premium;
+  const luxuryRate = activeConfig.rates?.luxury ?? DEFAULT_ESTIMATOR_CONFIG.rates.luxury;
 
   return (
     <div className="glass-panel p-6 md:p-8 relative">
@@ -92,6 +100,24 @@ export const Estimator: React.FC<EstimatorProps> = ({
       </h3>
 
       <div className="space-y-6">
+        {/* Service Location Dropdown */}
+        <div>
+          <label className="font-label-caps text-label-caps text-secondary block mb-2 uppercase tracking-widest">
+            Service Location / State
+          </label>
+          <select
+            value={selectedLocation}
+            onChange={(e) => setSelectedLocation(e.target.value)}
+            className="w-full bg-surface-container border border-outline-variant px-3 py-2.5 text-sm text-primary font-bold focus:outline-none focus:border-tertiary-fixed-dim cursor-pointer"
+          >
+            {activeLocations.map((loc) => (
+              <option key={loc.id} value={loc.name}>
+                {loc.name} {loc.cities && loc.cities.length > 0 ? `(${loc.cities.slice(0, 3).join(', ')}...)` : ''}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {/* Plot Area */}
         <div>
           <div className="flex justify-between items-center mb-2">

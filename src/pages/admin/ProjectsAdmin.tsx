@@ -68,7 +68,7 @@ export const ProjectsAdmin: React.FC = () => {
         <div>
           <h1 className="font-headline-lg text-2xl font-bold text-primary">Projects Portfolio CMS</h1>
           <p className="font-body-md text-xs text-secondary">
-            Manage Odisha Landmark Completed Projects.
+            Manage Completed Projects across Odisha & West Bengal.
           </p>
         </div>
         <button

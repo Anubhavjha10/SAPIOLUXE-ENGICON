@@ -30,7 +30,6 @@ export const ServicesAdmin: React.FC = () => {
         subtitle: '',
         category: 'Residential',
         description: '',
-        startingPrice: '₹ 1,400 / sq.ft',
         features: [],
         order: services.length + 1,
         image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',

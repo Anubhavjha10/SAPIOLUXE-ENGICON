@@ -32,6 +32,7 @@ import { HomepageAdmin } from './pages/admin/HomepageAdmin';
 import { ContactAdmin } from './pages/admin/ContactAdmin';
 import { BrandingAdmin } from './pages/admin/BrandingAdmin';
 import { LeadsAdmin } from './pages/admin/LeadsAdmin';
+import { LocationsAdmin } from './pages/admin/LocationsAdmin';
 
 const AdminRouteWrapper: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -89,6 +90,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="homepage" element={<HomepageAdmin />} />
         <Route path="contact" element={<ContactAdmin />} />
         <Route path="branding" element={<BrandingAdmin />} />
+        <Route path="locations" element={<LocationsAdmin />} />
         <Route path="settings" element={<BrandingAdmin />} />
         <Route path="leads" element={<LeadsAdmin />} />
         <Route path="inquiries" element={<LeadsAdmin />} />

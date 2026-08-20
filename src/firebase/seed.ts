@@ -10,6 +10,7 @@ import {
   INITIAL_CONTACT_DATA,
   INITIAL_INQUIRIES_DATA,
 } from '../data/mockData';
+import { INITIAL_LOCATIONS_DATA } from '../services/locationService';
 import { BrandingSettings, AboutPageContent } from '../types';
 
 export const INITIAL_BRANDING_DATA: BrandingSettings = {
@@ -25,8 +26,8 @@ export const INITIAL_BRANDING_DATA: BrandingSettings = {
 export const INITIAL_ABOUT_DATA: AboutPageContent = {
   heroEyebrow: 'ABOUT SAPIOLUXE ENGICON',
   heroHeading: 'Engineering Trust.\nBuilding Perfections.',
-  heroDescription: "Sapioluxe Engicon is Odisha's premier construction and architectural engineering firm, delivering high-end residential luxury homes and landmark commercial spaces.",
-  companyStory: 'Founded by Er. Ranjit Das, Sapioluxe Engicon was established with a singular vision: to eliminate compromise in construction. By introducing 240+ structural quality audits, fixed-price contracts, and architectural mastery, we have transformed how Odisha builds.',
+  heroDescription: "Sapioluxe Engicon is a premier construction and architectural engineering firm, delivering high-end residential luxury homes and landmark commercial spaces across Odisha & West Bengal.",
+  companyStory: 'Founded by Er. Ranjit Das, Sapioluxe Engicon was established with a singular vision: to eliminate compromise in construction. By introducing 240+ structural quality audits, fixed-price contracts, and architectural mastery, we have transformed how Odisha & West Bengal builds.',
   leadershipSection: 'Led by chartered civil engineers and veteran architects, our team brings over 18 years of field excellence to every project.',
   companyStatistics: [
     { label: 'Delivered Projects', value: '50+' },
@@ -39,6 +40,21 @@ export const INITIAL_ABOUT_DATA: AboutPageContent = {
     { id: '2', title: 'Transparent Pricing', description: 'Detailed BOQ breakdown with guaranteed fixed-price contracts.', icon: 'CheckCircle2', order: 2, active: true },
     { id: '3', title: 'Timely Execution', description: 'Strict milestone-based delivery with penalty-backed timelines.', icon: 'Clock', order: 3, active: true },
     { id: '4', title: 'Luxury Aesthetics', description: 'Seamless integration of structural durability and high-end design.', icon: 'Sparkles', order: 4, active: true },
+  ],
+  vision: {
+    heading: 'Our Vision',
+    title: 'Building a Better Future Through Engineering Excellence',
+    description: 'Sapioluxe Engicon envisions setting the benchmark in luxury construction and civil engineering across Eastern India (Odisha & West Bengal) by establishing transparent fixed-price contracts, 240+ point structural quality audits, and timeless architectural craftsmanship.',
+    image: '',
+    ctaText: 'Explore Projects',
+    ctaLink: '/projects',
+    active: true,
+  },
+  milestones: [
+    { id: 'm1', year: '2006', title: 'Foundation Laid', description: 'Established in Bhubaneswar as a boutique structural engineering consultancy.', displayOrder: 1, active: true },
+    { id: 'm2', year: '2012', title: 'Commercial Expansion', description: 'Delivered initial landmark 10-story corporate headquarters in Infocity.', displayOrder: 2, active: true },
+    { id: 'm3', year: '2018', title: 'Ultra-Luxury Residential Launch', description: 'Introduced fixed-price contract modeling and 240+ point quality audits.', displayOrder: 3, active: true },
+    { id: 'm4', year: '2024', title: 'Regional Leadership', description: 'Surpassed 50+ flagship completed landmarks across Odisha & West Bengal with 100% on-time delivery record.', displayOrder: 4, active: true },
   ],
 };
 
@@ -124,7 +140,15 @@ export async function initializeFirstTimeData(): Promise<void> {
       }
     }
 
-    // 11. Leads Collection
+    // 11. Service Locations Collection
+    const locations = await getCollectionData('locations');
+    if (locations.length === 0) {
+      for (const loc of INITIAL_LOCATIONS_DATA) {
+        await saveDocumentData('locations', loc.id, loc);
+      }
+    }
+
+    // 12. Leads Collection
     const leads = await getCollectionData('leads');
     if (leads.length === 0) {
       for (const lead of INITIAL_INQUIRIES_DATA) {

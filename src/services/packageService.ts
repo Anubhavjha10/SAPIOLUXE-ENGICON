@@ -35,6 +35,28 @@ export const savePackage = async (pkg: Package): Promise<Package> => {
 
   try {
     await saveDocumentData(COLLECTION, pkgToSave.id, pkgToSave);
+
+    // If updating a core tier (classic, premium, luxury), sync rate to estimator/config
+    if (['classic', 'premium', 'luxury'].includes(pkgToSave.id)) {
+      const rate = pkgToSave.ratePerSqFt ?? pkgToSave.pricePerSqFt;
+      if (typeof rate === 'number' && rate > 0) {
+        try {
+          const estDoc = await getDocumentData<any>('estimator', 'config');
+          if (estDoc && estDoc.rates) {
+            await saveDocumentData('estimator', 'config', {
+              ...estDoc,
+              rates: {
+                ...estDoc.rates,
+                [pkgToSave.id]: rate,
+              },
+              updatedAt: new Date().toISOString(),
+            });
+          }
+        } catch (e) {
+          console.warn('Failed syncing package rate to estimator config', e);
+        }
+      }
+    }
   } catch (err) {
     console.warn('Firestore save package failed, saved locally', err);
   }

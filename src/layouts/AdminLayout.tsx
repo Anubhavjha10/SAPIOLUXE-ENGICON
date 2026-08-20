@@ -22,6 +22,7 @@ import {
   Clock,
   ShieldAlert,
   User,
+  MapPin,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useBranding } from '../hooks/useBranding';
@@ -70,6 +71,7 @@ export const AdminLayout: React.FC = () => {
     { name: 'Cost Estimator Rates', path: '/admin/estimator', icon: Calculator },
     { name: 'Testimonials', path: '/admin/testimonials', icon: MessageSquareQuote },
     { name: 'Media & Gallery', path: '/admin/gallery', icon: Images },
+    { name: 'Service Locations', path: '/admin/locations', icon: MapPin },
     { name: 'Contact & Address', path: '/admin/contact', icon: Mail },
     { name: 'Central Branding', path: '/admin/branding', icon: SlidersHorizontal },
     { name: 'Inquiries & Leads', path: '/admin/leads', icon: Users },

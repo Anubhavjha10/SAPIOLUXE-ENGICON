@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check } from 'lucide-react';
+import { Check, Shield, Wrench } from 'lucide-react';
 import { Package } from '../types';
 import { formatINR } from '../utils/estimatorCalculator';
 
@@ -12,9 +12,19 @@ interface PackageCardProps {
 export const PackageCard: React.FC<PackageCardProps> = ({ pkg, onSelectPackage, isSelected }) => {
   const isHighlighted = pkg.id === 'premium' || pkg.isPopular || isSelected;
 
+  const rawWarranty = pkg.structuralWarranty || '20 Years';
+  const warrantyDisplay = rawWarranty.toLowerCase().includes('warranty')
+    ? rawWarranty
+    : `${rawWarranty} Structural Warranty`;
+
+  const rawMaintenance = pkg.freeMaintenance || '1 Year Free Maintenance';
+  const maintenanceDisplay = rawMaintenance.toLowerCase().includes('maintenance')
+    ? rawMaintenance
+    : `${rawMaintenance} Free Maintenance`;
+
   return (
     <div
-      className={`glass-panel p-6 flex flex-col justify-between min-h-[280px] transition-all duration-300 ${
+      className={`glass-panel p-6 flex flex-col justify-between min-h-[320px] transition-all duration-300 ${
         isHighlighted
           ? 'border border-[#E9B84F] shadow-[0_10px_30px_rgba(112,82,200,0.35)] transform md:-translate-y-4 relative z-10'
           : 'bg-surface/80 text-on-background border border-outline-variant/30'
@@ -60,8 +70,26 @@ export const PackageCard: React.FC<PackageCardProps> = ({ pkg, onSelectPackage, 
         {pkg.tagline}
       </p>
 
+      {/* Prominent Package Benefits Box */}
+      <div
+        className={`mt-4 p-3 rounded space-y-2 text-xs font-bold ${
+          isHighlighted
+            ? 'bg-white/10 text-[#F2C15A] border border-white/15'
+            : 'bg-surface-container/70 text-primary border border-outline-variant/40'
+        }`}
+      >
+        <div className="flex items-center gap-2">
+          <Shield className={`w-4 h-4 shrink-0 ${isHighlighted ? 'text-[#F2C15A]' : 'text-tertiary-fixed-dim'}`} />
+          <span>{warrantyDisplay}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Wrench className={`w-4 h-4 shrink-0 ${isHighlighted ? 'text-[#F2C15A]' : 'text-tertiary-fixed-dim'}`} />
+          <span>{maintenanceDisplay}</span>
+        </div>
+      </div>
+
       <ul
-        className={`font-body-md text-[14px] space-y-2.5 mt-4 flex-grow border-t pt-4 ${
+        className={`font-body-md text-[14px] space-y-2 flex-grow border-t pt-3 mt-4 ${
           isHighlighted ? 'border-white/15 text-white' : 'technical-line text-on-surface-variant'
         }`}
       >

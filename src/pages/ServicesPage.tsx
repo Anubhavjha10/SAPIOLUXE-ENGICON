@@ -19,7 +19,7 @@ export const ServicesPage: React.FC = () => {
             Turnkey Services
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-3xl leading-relaxed">
-            From initial BIM structural modeling and soil testing to bespoke villa construction and luxury interior fitouts across Odisha.
+            From initial BIM structural modeling and soil testing to bespoke villa construction and luxury interior fitouts across Odisha & West Bengal.
           </p>
         </div>
       </div>

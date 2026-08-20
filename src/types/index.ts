@@ -48,6 +48,8 @@ export interface Package {
   description?: string;
   badge?: string;
   isPopular?: boolean;
+  structuralWarranty?: string;
+  freeMaintenance?: string;
   features: string[];
   materialSpecs: PackageSpec[];
   image?: string;
@@ -192,14 +194,36 @@ export interface Pillar {
   active: boolean;
 }
 
+export interface AboutMilestone {
+  id: string;
+  year: string;
+  title: string;
+  description: string;
+  image?: string;
+  displayOrder: number;
+  active: boolean;
+}
+
+export interface AboutVision {
+  heading: string;
+  title: string;
+  description: string;
+  image?: string;
+  ctaText?: string;
+  ctaLink?: string;
+  active: boolean;
+}
+
 export interface AboutPageContent {
-  heroEyebrow: string;
-  heroHeading: string;
-  heroDescription: string;
-  companyStory: string;
-  leadershipSection: string;
-  companyStatistics: { label: string; value: string }[];
-  corePillars: Pillar[];
+  heroEyebrow?: string;
+  heroHeading?: string;
+  heroDescription?: string;
+  companyStory?: string;
+  leadershipSection?: string;
+  companyStatistics?: { label: string; value: string }[];
+  corePillars?: Pillar[];
+  vision?: AboutVision;
+  milestones?: AboutMilestone[];
   updatedAt?: string;
 }
 
@@ -255,7 +279,18 @@ export interface Inquiry {
 export interface UserProfile {
   uid: string;
   email: string;
-  displayName?: string;
+  displayName: string;
   role: 'admin' | 'editor';
+  createdAt: string;
 }
 
+export interface ServiceLocation {
+  id: string;
+  name: string;
+  description?: string;
+  cities?: string[];
+  displayOrder: number;
+  active: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}

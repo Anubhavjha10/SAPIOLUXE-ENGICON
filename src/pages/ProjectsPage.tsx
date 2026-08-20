@@ -33,13 +33,13 @@ export const ProjectsPage: React.FC = () => {
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-12">
         <div className="border-b technical-line pb-6">
           <span className="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em] mb-2 block">
-            Architectural Precision in Odisha
+            Architectural Precision in Odisha & West Bengal
           </span>
           <h1 className="font-display-lg text-headline-lg-mobile md:text-display-lg text-primary font-bold mb-4">
             Completed Project Portfolio
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-3xl leading-relaxed">
-            Explore our delivered luxury villas, corporate towers, and turnkey interior milestones across Bhubaneswar, Cuttack, and Puri.
+            Explore our delivered luxury villas, corporate towers, and turnkey interior milestones across Odisha & West Bengal.
           </p>
         </div>
       </div>

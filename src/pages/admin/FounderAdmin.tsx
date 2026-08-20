@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { getFounderData, updateFounderData } from '../../services/founderService';
+import { useFounder } from '../../hooks/useDataHooks';
 import { Founder } from '../../types';
 import { ImageUploader } from '../../components/ImageUploader';
 import { Save, CheckCircle, Plus, Trash2 } from 'lucide-react';
 
 export const FounderAdmin: React.FC = () => {
+  const { founder: firestoreFounder, update } = useFounder();
   const [founder, setFounder] = useState<Founder | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [newSpec, setNewSpec] = useState('');
 
   useEffect(() => {
-    getFounderData().then(setFounder);
-  }, []);
+    if (firestoreFounder && !founder) {
+      setFounder(firestoreFounder);
+    }
+  }, [firestoreFounder]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!founder) return;
-    await updateFounderData(founder);
+    await update(founder);
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
   };

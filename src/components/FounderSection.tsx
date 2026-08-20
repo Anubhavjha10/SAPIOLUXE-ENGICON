@@ -1,15 +1,19 @@
 import React from 'react';
 import { Quote } from 'lucide-react';
 import { Founder } from '../types';
-import { INITIAL_FOUNDER_DATA } from '../data/mockData';
+import { useFounder } from '../hooks/useDataHooks';
 
 interface FounderSectionProps {
   founder?: Founder;
 }
 
 export const FounderSection: React.FC<FounderSectionProps> = ({
-  founder = INITIAL_FOUNDER_DATA,
+  founder: propFounder,
 }) => {
+  const { founder: hookFounder } = useFounder();
+  const founder = propFounder || hookFounder;
+
+  if (!founder) return null;
   return (
     <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-section-gap">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">

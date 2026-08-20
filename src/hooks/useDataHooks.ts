@@ -11,6 +11,7 @@ import {
   GalleryImage,
   ContactSettings,
   Inquiry,
+  ServiceLocation,
 } from '../types';
 import { getHomepageContent, updateHomepageContent, subscribeToHomepageContent } from '../services/homepageService';
 import { getFounderData, updateFounderData, subscribeToFounderData } from '../services/founderService';
@@ -23,6 +24,7 @@ import { getTestimonials, saveTestimonial, deleteTestimonial, subscribeToTestimo
 import { getGalleryImages, saveGalleryImage, deleteGalleryImage, subscribeToGalleryImages } from '../services/galleryService';
 import { getContactSettings, updateContactSettings, subscribeToContactSettings } from '../services/contactService';
 import { getInquiries, submitInquiry, updateInquiryStatus, deleteInquiry, subscribeToInquiries } from '../services/inquiryService';
+import { getLocations, saveLocation, deleteLocation, subscribeToLocations, INITIAL_LOCATIONS_DATA } from '../services/locationService';
 import {
   INITIAL_HOMEPAGE_DATA,
   INITIAL_FOUNDER_DATA,
@@ -84,7 +86,7 @@ export const useFounder = () => {
     return res;
   };
 
-  return { data, loading, update };
+  return { founder: data, data, loading, update };
 };
 
 export const useAbout = () => {
@@ -333,4 +335,56 @@ export const useLeads = () => {
   };
 
   return { leads, loading, submitNewLead, updateStatus, remove };
+};
+
+export const useAboutPageContent = () => {
+  const [about, setAbout] = useState<AboutPageContent>(INITIAL_ABOUT_DATA);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getAboutPageContent().then((res) => {
+      if (res) setAbout(res);
+      setLoading(false);
+    });
+    const sub = subscribeToAboutPageContent((res) => {
+      if (res) setAbout(res);
+      setLoading(false);
+    });
+    return () => sub();
+  }, []);
+
+  const update = async (updated: AboutPageContent) => {
+    const res = await updateAboutPageContent(updated);
+    setAbout(res);
+    return res;
+  };
+
+  return { about, loading, update };
+};
+
+export const useLocations = () => {
+  const [locations, setLocations] = useState<ServiceLocation[]>(INITIAL_LOCATIONS_DATA);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getLocations().then((res) => {
+      if (res && res.length > 0) setLocations(res);
+      setLoading(false);
+    });
+    const sub = subscribeToLocations((res) => {
+      if (res && res.length > 0) setLocations(res);
+      setLoading(false);
+    });
+    return () => sub();
+  }, []);
+
+  const save = async (item: ServiceLocation) => {
+    return await saveLocation(item);
+  };
+
+  const remove = async (id: string) => {
+    return await deleteLocation(id);
+  };
+
+  return { locations, loading, save, remove };
 };

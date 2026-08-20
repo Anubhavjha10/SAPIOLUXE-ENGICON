@@ -15,7 +15,7 @@ export const INITIAL_FOUNDER_DATA: Founder = {
   name: 'Ranjit Das',
   title: 'Founder & Managing Director',
   quote: 'Our mission is to replace compromise with craftsmanship. Every foundation we lay is a testament to precision engineering.',
-  bio: 'With over 18 years of pioneering structural engineering across Odisha, Er. Ranjit Das established Sapioluxe Engicon to bridge the gap between heavy civil durability and ultra-luxury residential aesthetics. Under his leadership, the firm has delivered 50+ flagship landmarks across Bhubaneswar, Cuttack, and Puri.',
+  bio: 'With over 18 years of pioneering structural engineering across Odisha & West Bengal, Er. Ranjit Das established Sapioluxe Engicon to bridge the gap between heavy civil durability and ultra-luxury residential aesthetics. Under his leadership, the firm has delivered 50+ flagship landmarks across Bhubaneswar, Cuttack, Puri, and Kolkata.',
   image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_5qee1YhawR6RYC_J7hFA6n9too0CPPPHHGBv6BH-0RPjwt0IzWKAMEybdkzUVIA-UrkBDpOiown1kqW8ymg8sGsJmAp9CI77GHmhO2FhbKZ3ffbUVENf14UEQ8FeT58m1IZfSvxLvHkb5UJ9Qs-U-H412bLOACeTNBnf450ipcr3hSczzEJR1rx8BZugEWYaOFgnkXsldvl-e8R1xWDubphv_h1c-kCTqdDZ0F3ALZmxme6OHkkM',
   experienceYears: 18,
   projectsCompleted: 54,
@@ -24,7 +24,7 @@ export const INITIAL_FOUNDER_DATA: Founder = {
     'B.Tech Civil Engineering (KIIT / VSSUT Alumni)',
     'Chartered Structural Engineer & Registered Architect',
     '240+ Point Milestone Inspection Framework Pioneer',
-    '100% On-Time Delivery Track Record in Odisha',
+    '100% On-Time Delivery Track Record in Odisha & West Bengal',
   ],
 };
 
@@ -37,13 +37,15 @@ export const INITIAL_PACKAGES_DATA: Package[] = [
     unit: '₹/sq.ft',
     tagline: 'Essential structural integrity with refined contemporary finishes.',
     isPopular: false,
+    structuralWarranty: '20 Years',
+    freeMaintenance: '1 Year Free Maintenance',
     features: [
       'Standard Premium Cement & Fe550 TMT Steel',
       'Standard Finishes & Vitrified Flooring',
       'Essential Smart Home Wiring & Automation',
       'Granite Kitchen Countertop & SS Sink',
       'Jaguar / Asian Paints Standard Specifications',
-      '10-Year Structural Warranty',
+      '20-Year Structural Warranty',
     ],
     materialSpecs: [
       { name: 'Steel', value: 'Tata Tiscon / JSW Fe550D TMT Bars' },
@@ -64,13 +66,15 @@ export const INITIAL_PACKAGES_DATA: Package[] = [
     unit: '₹/sq.ft',
     tagline: 'High-performance luxury construction engineered for modern living.',
     isPopular: true,
+    structuralWarranty: '20 Years',
+    freeMaintenance: '1 Year Free Maintenance',
     features: [
       'Imported Italian Marble & Hardwood Flooring',
       'Smart Home Ready (IoT Lighting & Security)',
       'Modular Kitchen with Quartz Countertop',
       'Grohe / Kohler Concealed Bath Fittings',
       'Acoustic Double-Glazed UPVC Windows',
-      '20-Year Structural Warranty + 5-Yr Free Maintenance',
+      '20-Year Structural Warranty + 1-Yr Free Maintenance',
     ],
     materialSpecs: [
       { name: 'Steel', value: 'Tata Tiscon Super-D Fe550D' },
@@ -91,13 +95,15 @@ export const INITIAL_PACKAGES_DATA: Package[] = [
     unit: '₹/sq.ft',
     tagline: 'Uncompromising bespoke craftsmanship with Italian specs & full automation.',
     isPopular: false,
+    structuralWarranty: '20 Years',
+    freeMaintenance: '1 Year Free Maintenance',
     features: [
       'Bespoke Italian Specs & Exotic Granite',
       'Full Home Automation (Voice, App, Climate Control)',
       'Custom Designer Facade & Floating Staircases',
       'Private Terrace Garden & Infinity Plunge Pool Ready',
       'Toto / Hansgrohe Luxury Sanitaryware Suite',
-      'Lifetime Structural Guarantee + Concierge Service',
+      '20-Year Structural Guarantee + 1-Yr Free Maintenance',
     ],
     materialSpecs: [
       { name: 'Steel', value: 'Primary Steel (Tata Tiscon / Jindal Panther)' },
@@ -301,7 +307,7 @@ export const INITIAL_TESTIMONIALS_DATA: Testimonial[] = [
     author: 'Priya Dash',
     role: 'Senior Advocate, High Court',
     location: 'Cuttack',
-    quote: 'The level of structural precision and transparent billing is unheard of in Odisha. The material quality strictly matched the tier contracts without any deviation.',
+    quote: 'The level of structural precision and transparent billing is unheard of across Odisha & West Bengal. The material quality strictly matched the tier contracts without any deviation.',
     rating: 5,
     projectRef: 'Mahanadi Crest Interiors',
     isFeatured: true,
@@ -356,9 +362,9 @@ export const INITIAL_GALLERY_DATA: GalleryImage[] = [
 ];
 
 export const INITIAL_HOMEPAGE_DATA: HomepageContent = {
-  heroTagline: "ODISHA'S PREMIER CONSTRUCTION FIRM",
+  heroTagline: "PREMIER CONSTRUCTION FIRM ACROSS ODISHA & WEST BENGAL",
   heroTitle: 'Building Better.\nEngineering Legacies.',
-  heroSubtitle: 'Precision engineering meets uncompromising luxury. We deliver turnkey residential and commercial projects across Odisha, setting new standards in structural integrity and aesthetic perfection.',
+  heroSubtitle: 'Precision engineering meets uncompromising luxury. We deliver turnkey residential and commercial projects across Odisha & West Bengal, setting new standards in structural integrity and aesthetic perfection.',
   heroVideoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-architectural-blueprint-of-a-house-41551-large.mp4',
   heroCtaPrimary: 'Get Free Consultation',
   heroCtaSecondary: 'Explore Our Projects',

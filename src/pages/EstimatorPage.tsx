@@ -5,9 +5,15 @@ import { CTASection } from '../components/CTASection';
 import { useEstimator } from '../hooks/useDataHooks';
 import { ShieldCheck, Download, Calculator, CheckCircle2 } from 'lucide-react';
 
+import { formatINR } from '../utils/estimatorCalculator';
+
 export const EstimatorPage: React.FC = () => {
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: (estimate?: any) => void }>();
   const { config } = useEstimator();
+
+  const classicRate = config.rates?.classic ?? 1400;
+  const premiumRate = config.rates?.premium ?? 1750;
+  const luxuryRate = config.rates?.luxury ?? 2200;
 
   return (
     <div className="w-full py-12">
@@ -72,15 +78,15 @@ export const EstimatorPage: React.FC = () => {
               <div className="space-y-2 text-xs font-mono-technical text-on-surface-variant border-t technical-line pt-3">
                 <div className="flex justify-between">
                   <span>Classic Tier:</span>
-                  <span className="font-bold text-primary">₹1,400 / sq.ft</span>
+                  <span className="font-bold text-primary">{formatINR(classicRate)} / sq.ft</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Premium Tier:</span>
-                  <span className="font-bold text-tertiary-fixed-dim">₹1,750 / sq.ft</span>
+                  <span className="font-bold text-tertiary-fixed-dim">{formatINR(premiumRate)} / sq.ft</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Luxury Tier:</span>
-                  <span className="font-bold text-primary">₹2,200 / sq.ft</span>
+                  <span className="font-bold text-primary">{formatINR(luxuryRate)} / sq.ft</span>
                 </div>
               </div>
             </div>

@@ -1,21 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { getContactSettings } from '../services/contactService';
 import { submitInquiry } from '../services/inquiryService';
+import { useLocations } from '../hooks/useDataHooks';
 import { ContactSettings } from '../types';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, Globe, Building } from 'lucide-react';
 
 export const ContactPage: React.FC = () => {
   const [contactInfo, setContactInfo] = useState<ContactSettings | null>(null);
+  const { locations } = useLocations();
+
+  const activeLocations = useMemo(() => {
+    return locations
+      .filter((loc) => loc.active !== false)
+      .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+  }, [locations]);
+
+  // Aggregate location options for form
+  const locationOptions = useMemo(() => {
+    const opts: string[] = [];
+    activeLocations.forEach((loc) => {
+      if (loc.cities && loc.cities.length > 0) {
+        loc.cities.forEach((city) => {
+          opts.push(`${city}, ${loc.name}`);
+        });
+      } else {
+        opts.push(loc.name);
+      }
+    });
+    return opts.length > 0 ? opts : ['Bhubaneswar, Odisha', 'Kolkata, West Bengal'];
+  }, [activeLocations]);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    location: 'Bhubaneswar',
+    location: '',
     projectType: 'Turnkey Residential Villa',
     plotArea: 1800,
     budget: '₹ 45 - 75 Lakhs',
     message: '',
   });
+
+  useEffect(() => {
+    if (locationOptions.length > 0 && !formData.location) {
+      setFormData((prev) => ({ ...prev, location: locationOptions[0] }));
+    }
+  }, [locationOptions]);
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,7 +89,7 @@ export const ContactPage: React.FC = () => {
             Connect with Sapioluxe
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-3xl leading-relaxed">
-            Schedule an in-person office meeting at our Patia headquarters or request an immediate site survey with our principal engineers.
+            Schedule an in-person office meeting at our headquarters or request an immediate site survey with our principal engineers.
           </p>
         </div>
       </div>
@@ -100,7 +130,7 @@ export const ContactPage: React.FC = () => {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Er. Subhashree Mohanty"
+                      placeholder="e.g. Subhashree Mohanty"
                       className="w-full bg-surface-container border border-outline-variant px-3 py-2.5 text-sm text-primary focus:outline-none focus:border-tertiary-fixed-dim"
                     />
                   </div>
@@ -135,16 +165,19 @@ export const ContactPage: React.FC = () => {
                   </div>
                   <div>
                     <label className="block font-label-caps text-xs text-secondary mb-1 uppercase tracking-widest">
-                      Project Location *
+                      Project Service Location *
                     </label>
-                    <input
-                      required
-                      type="text"
+                    <select
                       value={formData.location}
                       onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                      placeholder="Patia, Bhubaneswar / CDA, Cuttack"
-                      className="w-full bg-surface-container border border-outline-variant px-3 py-2.5 text-sm text-primary focus:outline-none focus:border-tertiary-fixed-dim"
-                    />
+                      className="w-full bg-surface-container border border-outline-variant px-3 py-2.5 text-sm text-primary focus:outline-none focus:border-tertiary-fixed-dim font-bold"
+                    >
+                      {locationOptions.map((opt, idx) => (
+                        <option key={idx} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
@@ -208,7 +241,7 @@ export const ContactPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-primary text-on-primary py-4 px-6 font-label-caps text-label-caps hover:bg-tertiary-fixed-dim hover:text-tertiary-container transition-all flex items-center justify-center gap-2 font-bold"
+                  className="w-full bg-primary text-on-primary py-4 px-6 font-label-caps text-label-caps hover:bg-tertiary-fixed-dim hover:text-tertiary-container transition-all flex items-center justify-center gap-2 font-bold cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                   <span>{isSubmitting ? 'Transmitting Request...' : 'Submit Contact Request'}</span>
@@ -217,12 +250,12 @@ export const ContactPage: React.FC = () => {
             )}
           </div>
 
-          {/* Right Column: Contact Details */}
+          {/* Right Column: Contact Details & Dynamic Locations */}
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-primary text-on-primary p-8 space-y-6 shadow-xl">
               <div>
                 <span className="font-label-caps text-xs text-tertiary-fixed-dim uppercase tracking-widest block font-bold mb-2">
-                  ODISHA HEADQUARTERS
+                  CIVIL ENGINEERING HEADQUARTERS
                 </span>
                 <h3 className="font-headline-md text-2xl font-bold text-on-primary">
                   {contactInfo?.headquarters || 'Bhubaneswar Headquarters'}
@@ -267,6 +300,46 @@ export const ContactPage: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            {/* Dynamic Active Locations Card */}
+            <div className="bg-surface p-6 border border-outline-variant space-y-4">
+              <div className="flex items-center gap-2 border-b border-outline-variant pb-3">
+                <Globe className="w-5 h-5 text-tertiary-fixed-dim" />
+                <h4 className="font-headline-md text-base font-bold text-primary uppercase tracking-wider">
+                  Our Service Locations
+                </h4>
+              </div>
+
+              <div className="space-y-3">
+                {activeLocations.map((loc) => (
+                  <div key={loc.id} className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <Building className="w-4 h-4 text-tertiary-fixed-dim shrink-0" />
+                      <span className="font-headline-md text-sm font-bold text-primary">
+                        {loc.name}
+                      </span>
+                    </div>
+                    {loc.description && (
+                      <p className="font-body-md text-xs text-on-surface-variant pl-6">
+                        {loc.description}
+                      </p>
+                    )}
+                    {loc.cities && loc.cities.length > 0 && (
+                      <div className="pl-6 flex flex-wrap gap-1 pt-1">
+                        {loc.cities.map((city, idx) => (
+                          <span
+                            key={idx}
+                            className="bg-surface-container text-primary font-mono-technical text-[10px] px-2 py-0.5 border border-outline-variant"
+                          >
+                            {city}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -278,7 +351,7 @@ export const ContactPage: React.FC = () => {
             Navigation Map
           </span>
           <h3 className="font-headline-md text-xl font-bold text-primary">
-            Visit Our Patia Headquarters
+            Visit Our Headquarters
           </h3>
         </div>
 

@@ -1,17 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Mail, Phone, Building2 } from 'lucide-react';
+import { MapPin, Mail, Phone, Building2, Globe } from 'lucide-react';
 import { useBranding } from '../hooks/useBranding';
-import { useContactSettings } from '../hooks/useDataHooks';
+import { useContactSettings, useLocations } from '../hooks/useDataHooks';
 
 export const Footer: React.FC = () => {
   const { brandName, footerLogo, logo, tagline } = useBranding();
   const { contact } = useContactSettings();
+  const { locations } = useLocations();
+
+  const activeLocations = locations
+    .filter((loc) => loc.active !== false)
+    .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+
   const displayLogo = footerLogo || logo;
 
   return (
     <footer className="bg-primary text-on-primary w-full relative border-t border-outline-variant/20 px-margin-mobile md:px-margin-desktop py-section-gap">
-      <div className="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter">
+      <div className="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-5 gap-gutter">
         {/* Brand Column */}
         <div className="md:col-span-1 space-y-4">
           <Link to="/" className="flex items-center gap-3 group">
@@ -25,7 +31,7 @@ export const Footer: React.FC = () => {
             </span>
           </Link>
           <p className="font-body-md text-sm text-surface-variant leading-relaxed">
-            {tagline || 'Precision engineering meets ultra-luxury construction across Odisha.'}
+            {tagline || 'Precision engineering meets ultra-luxury construction.'}
           </p>
           <p className="font-body-md text-xs text-surface-variant/80 leading-relaxed">
             © {new Date().getFullYear()} {brandName}.<br />All rights reserved.<br />Unshakable Structural Quality.
@@ -57,7 +63,26 @@ export const Footer: React.FC = () => {
           </Link>
         </div>
 
-        {/* Column 2: Legal & Support */}
+        {/* Column 2: Service Locations (CMS Driven) */}
+        <div className="flex flex-col space-y-3">
+          <span className="font-label-caps text-label-caps text-tertiary-fixed-dim uppercase tracking-[0.1em] font-bold mb-1 flex items-center gap-1.5">
+            <Globe className="w-3.5 h-3.5" /> Service Locations
+          </span>
+          {activeLocations.map((loc) => (
+            <div key={loc.id} className="space-y-0.5">
+              <span className="font-body-md text-sm text-on-primary font-bold block">
+                {loc.name}
+              </span>
+              {loc.cities && loc.cities.length > 0 && (
+                <span className="font-mono-technical text-[11px] text-surface-variant/80 block leading-tight">
+                  {loc.cities.join(' • ')}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Column 3: Standards & Access */}
         <div className="flex flex-col space-y-3">
           <span className="font-label-caps text-label-caps text-tertiary-fixed-dim uppercase tracking-[0.1em] font-bold mb-1">
             Standards & Access
@@ -79,7 +104,7 @@ export const Footer: React.FC = () => {
           </Link>
         </div>
 
-        {/* Column 3: Headquarters & Contact */}
+        {/* Column 4: Headquarters & Contact */}
         <div className="flex flex-col space-y-3">
           <span className="font-label-caps text-label-caps text-tertiary-fixed-dim uppercase tracking-[0.1em] font-bold mb-1">
             Headquarters & Contact
@@ -104,5 +129,3 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
-
-

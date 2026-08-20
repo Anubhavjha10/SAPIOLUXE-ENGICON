@@ -11,16 +11,24 @@ import { ProjectCard } from '../components/ProjectCard';
 import { TestimonialCard } from '../components/TestimonialCard';
 import { CTASection } from '../components/CTASection';
 
-import { useHomepage, usePackages, useServices, useProjects, useTestimonials } from '../hooks/useDataHooks';
+import { useHomepage, usePackages, useServices, useProjects, useTestimonials, useFounder, useLocations } from '../hooks/useDataHooks';
 
 export const Home: React.FC = () => {
   const { onOpenConsultation } = useOutletContext<{ onOpenConsultation: (estimate?: any) => void }>();
 
   const { data: homepageData } = useHomepage();
+  const { founder } = useFounder();
   const { packages } = usePackages();
   const { services } = useServices();
   const { projects } = useProjects();
   const { testimonials } = useTestimonials();
+  const { locations } = useLocations();
+
+  const activeLocations = locations
+    .filter((loc) => loc.active !== false)
+    .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+
+  const locationNames = activeLocations.map((l) => l.name).join(' & ') || 'Odisha & West Bengal';
 
   return (
     <div className="w-full">
@@ -31,7 +39,7 @@ export const Home: React.FC = () => {
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid grid-cols-1 md:grid-cols-12 gap-gutter relative z-10">
           <div className="md:col-span-8 md:col-start-1">
             <span className="font-label-caps text-label-caps text-tertiary-fixed-dim uppercase tracking-[0.2em] mb-4 block font-bold">
-              {homepageData?.heroTagline || "ODISHA'S PREMIER CONSTRUCTION FIRM"}
+              {homepageData?.heroTagline || `PREMIER CONSTRUCTION FIRM ACROSS ${locationNames.toUpperCase()}`}
             </span>
 
             <h1 className="font-display-xl text-headline-lg-mobile md:text-display-xl text-white mb-6 leading-tight font-bold whitespace-pre-line drop-shadow-md">
@@ -40,7 +48,7 @@ export const Home: React.FC = () => {
 
             <p className="font-body-lg text-body-lg text-white/90 max-w-2xl mb-10 leading-relaxed drop-shadow-sm font-normal">
               {homepageData?.heroSubtitle ||
-                'Precision engineering meets uncompromising luxury. We deliver turnkey residential and commercial projects across Odisha, setting new standards in structural integrity and aesthetic perfection.'}
+                `Precision engineering meets uncompromising luxury. We deliver turnkey residential and commercial projects across ${locationNames}, setting new standards in structural integrity and aesthetic perfection.`}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -88,7 +96,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 6. Founder Desk */}
-      <FounderSection />
+      <FounderSection founder={founder} />
 
       {/* 7 & 11. Sapioluxe Standard & Trust Statistics */}
       <StatsSection />
@@ -140,7 +148,7 @@ export const Home: React.FC = () => {
         <div className="mb-12 border-b technical-line pb-4 flex justify-between items-end">
           <div>
             <span className="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em] mb-2 block">
-              Odisha Landmarks
+              {locationNames} Landmarks
             </span>
             <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary font-bold">
               Project Portfolio
@@ -184,7 +192,7 @@ export const Home: React.FC = () => {
             Client Endorsements
           </span>
           <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary font-bold">
-            Trusted by Leaders in Odisha
+            Trusted by Leaders in {locationNames}
           </h2>
         </div>
 

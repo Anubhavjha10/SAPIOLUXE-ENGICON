@@ -58,7 +58,7 @@ export const DEFAULT_ESTIMATOR_CONFIG: EstimatorConfig = {
       name: 'Plan Sanction & Approval',
       price: 35000, // +₹35k
       unit: 'Fixed',
-      description: 'Complete municipal clearance & Odisha BDA/CMC sanction filing.',
+      description: 'Complete municipal clearance & BDA/CMC/KMC sanction filing.',
       isDefaultSelected: true,
     },
   ],

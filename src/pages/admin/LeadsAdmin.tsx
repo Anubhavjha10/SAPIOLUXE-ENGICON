@@ -220,7 +220,7 @@ export const LeadsAdmin: React.FC = () => {
               </div>
               <div className="flex items-center gap-2 text-on-surface-variant">
                 <MapPin className="w-4 h-4 text-tertiary-fixed-dim" />
-                <span>{selectedLead.location || 'Odisha Region'}</span>
+                <span>{selectedLead.location || 'Odisha & West Bengal Region'}</span>
               </div>
               <div className="flex items-center gap-2 text-on-surface-variant">
                 <Calendar className="w-4 h-4 text-tertiary-fixed-dim" />
