@@ -295,7 +295,7 @@ export interface UserProfile {
   email: string;
   displayName: string;
   role: 'admin' | 'editor';
-  createdAt: string;
+  createdAt?: string;
 }
 
 export interface ServiceLocation {

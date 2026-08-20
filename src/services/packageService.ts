@@ -1,6 +1,6 @@
 import { Package } from '../types';
 import { INITIAL_PACKAGES_DATA } from '../data/mockData';
-import { getCollectionData, saveDocumentData, deleteDocumentData, subscribeToCollection } from '../firebase/firestore';
+import { getCollectionData, getDocumentData, saveDocumentData, deleteDocumentData, subscribeToCollection } from '../firebase/firestore';
 
 const COLLECTION = 'packages';
 

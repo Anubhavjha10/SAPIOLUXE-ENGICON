@@ -126,6 +126,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             email: firebaseUser.email || 'admin@sapioluxe.com',
             displayName: firebaseUser.displayName || 'Administrator',
             role: 'admin',
+            createdAt: new Date().toISOString(),
           };
           setUser(profile);
           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(profile));
@@ -296,6 +297,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           email: 'admin@sapioluxe.com',
           displayName: 'Er. Ranjit Das (Admin)',
           role: 'admin',
+          createdAt: new Date().toISOString(),
         };
         setUser(mockProfile);
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(mockProfile));
